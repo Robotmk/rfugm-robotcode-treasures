@@ -35,7 +35,7 @@ This Codespace ships [uv](https://docs.astral.sh/uv/) but deliberately **no envi
    .venv/bin/pip install -r requirements.txt
    ```
 
-3. Command palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) → **RobotCode: Select Python Environment** → `.venv`.
+3. Command palette (`Ctrl+Shift+P` / `Cmd+Shift+P`) → **RobotCode: Select Python Environment** → `.venv`.  
 4. Run `New Account Starts Empty` with the ▶ button next to it, then the same in the terminal:
 
    ```bash
