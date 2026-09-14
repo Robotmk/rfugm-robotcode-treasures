@@ -17,7 +17,7 @@ Withdraw Within Limit
     ${balance}    Get Balance    ${owner}
     ${limit}    Get Limit    ${owner}
     ${available}    Evaluate    ${balance} + ${limit}
-    IF    ${amount} >= ${available}
+    IF    ${amount} > ${available}
         Fail    Withdrawal refused for ${owner}: overdraft limit exceeded.
     END
     Withdraw    ${owner}    ${amount}
