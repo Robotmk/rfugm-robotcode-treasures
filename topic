@@ -42,7 +42,7 @@ find_branch() { # kind (topic|solution), chapter number
 }
 
 title() {
-  git show "$(ref_of "$1"):TOPIC.md" 2>/dev/null | sed -n 's/^# //p' | head -n 1
+  git show "$(ref_of "$1"):TOPIC.md" 2>/dev/null | sed -n 's/^# //p' | tr -d '`' | head -n 1
 }
 
 list() {
