@@ -37,7 +37,13 @@ BANK_URL = "http://localhost:8765"
 
 `robotcode -p nightly discover tests` lists six tests (see the self-check in `TOPIC.md`).
 
-### Why `extend-excludes` and not `excludes`
+### Why `extend-excludes` everywhere
+
+The base profiles `local` and `ci` use `extend-excludes` too. With plain `excludes`, the profile selected last wins:
+`robotcode -p local -p ci robot` would drop the `integration` exclusion from `local` and run the service tests
+without a service (11 tests instead of 8).
+
+### Why `extend-excludes` and not `excludes` in `nightly`
 
 `excludes = ["flaky"]` in `nightly` **replaces** the list inherited from `ci`, so `wip` is no longer excluded and
 `Monthly Interest Is Credited` sneaks back in (seven tests). `extend-excludes` appends to the inherited list.
