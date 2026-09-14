@@ -1,0 +1,7 @@
+.venv/
+results/
+__pycache__/
+*.pyc
+.robotcode_cache/
+playground/.venv/
+.DS_Store
