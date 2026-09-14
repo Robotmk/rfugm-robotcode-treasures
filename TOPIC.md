@@ -2,13 +2,13 @@
 
 > ⏱ 15 minutes · 📚 [REPL reference](https://robotcode.io/03_reference/repl) · [What's new in 2.6](https://robotcode.io/news/2026-06-09-whats-new-v2.6.0)
 
-## 😖 Pain
+## Pain
 
 You want to find out how `Transfer` behaves when the target account does not exist. The usual loop: write a
 throw-away test, run it, open `log.html`, change one line, run it again, … Five minutes for a question that
 should take ten seconds.
 
-## 💎 Treasure
+## Treasure
 
 **`robotcode repl`** — an interactive Robot Framework shell, heavily extended in RobotCode 2.6:
 
@@ -22,7 +22,7 @@ should take ten seconds.
 **Robot Framework notebooks** (`*.robotbook`) — the same live session in VS Code, split into cells with rendered
 log output next to each cell. Create one with **RobotCode: New Robot Framework Notebook**.
 
-## 🖥️ Demo
+## Demo
 
 ```text
 $ robotcode repl
@@ -41,7 +41,7 @@ $ robotcode repl
 
 Then open `notebooks/bank.robotbook`, run the first cell and continue the exploration there.
 
-## 🛠️ Exercise
+## Exercise
 
 1. Start `robotcode repl` and import the bank library.
 2. Open two accounts, deposit money, transfer between them. Use `${_}` to log the resulting balance.
@@ -49,12 +49,12 @@ Then open `notebooks/bank.robotbook`, run the first cell and continue the explor
 4. Save your session with `.save exploration.robot` and run it: `robotcode robot exploration.robot`.
    Does it pass? If not, fix the file until it does.
 
-### ⭐ Bonus
+### Bonus
 
 In `notebooks/bank.robotbook`, write a cell with a `FOR` loop that makes ten deposits of 10 and then checks the
 balance with `Balance Should Be`. Then add a Markdown cell that explains what you found out in exercise 3.
 
-## 💡 Hints
+## Hints
 
 <details><summary>Hint 1 — <code>No keyword with name 'Open Account' found</code></summary>
 
@@ -79,7 +79,7 @@ test — wrap expected failures in `Run Keyword And Expect Error` or use `Withdr
 Pick *Robot Framework REPL*. The notebook uses the Python environment selected for RobotCode (chapter 1).
 </details>
 
-## ✅ Self-check
+## Self-check
 
 ```bash
 robotcode robot exploration.robot
@@ -89,6 +89,6 @@ robotcode robot exploration.robot
 1 test, 1 passed, 0 failed
 ```
 
-## 🔑 Takeaway
+## Takeaway
 
 **Explore in the REPL, keep what works with `.save` — and clean up what only the REPL understands.**
