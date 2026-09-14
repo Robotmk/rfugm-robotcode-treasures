@@ -84,5 +84,36 @@ check "menu: arrow up + Enter opens main" test "$(branch)" = main
 tty_run 'q'
 check "menu: q changes nothing" test "$(branch)" = main
 
+# ./topic update — someone publishes new commits on origin.
+git clone -q "$TMP/origin.git" "$TMP/upstream"
+(
+  cd "$TMP/upstream"
+  echo "main v2" > README.md && git commit -qam "main v2"
+  git switch -q topic/01-alpha && echo "hint v2" > HINT.md && git add HINT.md && git commit -qm "topic v2"
+  git switch -q solution/01-alpha && echo "solved v2" > a.txt && git commit -qam "solution v2"
+  git switch -q -c topic/03-gamma main && printf '# Chapter 3 — Gamma\n' > TOPIC.md && git add . && git commit -qm "topic 3"
+  git push -q origin main topic/01-alpha solution/01-alpha topic/03-gamma
+)
+./topic 2 >/dev/null
+echo "local" > local.txt && git add local.txt && git commit -qm "local commit"   # a branch with commits of its own
+./topic 1 >/dev/null
+echo "my change" >> a.txt                                                        # uncommitted work on the current branch
+update_output="$(./topic update 2>&1 || true)"
+check "update: current branch gets new commits" test -f HINT.md
+check "update: uncommitted work survives" grep -q "my change" a.txt
+check "update: other local branch is fast-forwarded" test "$(git show main:README.md)" = "main v2"
+check "update: solution branch is fast-forwarded" test "$(git show solution/01-alpha:a.txt)" = "solved v2"
+check "update: branch with own commits is skipped" grep -q "skipped.*topic/02-beta" <<<"$update_output"
+check "update: own commits are kept" test "$(git show topic/02-beta:local.txt)" = local
+check "update: stays on the current branch" test "$(branch)" = topic/01-alpha
+check "update: new chapter is listed" bash -c './topic list | grep -q "03.*Gamma"'
+check "update: nothing left to do on a second run" bash -c './topic update | grep -q "0 branches updated"'
+
+(cd "$TMP/upstream" && git switch -q topic/01-alpha && echo "upstream edit" > a.txt && git commit -qam "topic v3" && git push -q origin topic/01-alpha)
+conflict_output="$(./topic update 2>&1 || true)"                  # a.txt still carries "my change"
+check "update: conflicting local change is reported" grep -q "conflict.*topic/01-alpha" <<<"$conflict_output"
+check "update: conflicting local change is kept in the stash" bash -c 'git stash list | grep -q "topic-update:topic/01-alpha"'
+check "update: branch is updated despite the conflict" test "$(git rev-parse topic/01-alpha)" = "$(git rev-parse origin/topic/01-alpha)"
+
 echo
 if [ "$failures" -eq 0 ]; then echo "All tests passed."; else echo "$failures test(s) failed."; exit 1; fi
