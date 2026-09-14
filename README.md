@@ -103,14 +103,16 @@ Use the `./topic` script in the terminal:
 ./topic list            # plain list of all chapters
 ```
 
-Your changes are never lost: when you leave a chapter, `./topic` saves them, and when you come back they are
-restored. Each chapter's `TOPIC.md` follows the same structure — 😖 pain, 💎 treasure, 🖥️ demo,
-🛠️ exercise, 💡 hints, ✅ self-check and 🔑 takeaway.
+Your changes are never lost: when you leave a chapter, `./topic` saves (stashes) them, and when you come back they are
+restored.  
 
-## The demo project: a tiny bank
 
-Accounts, deposits, withdrawals and transfers. Checking accounts may be overdrawn up to their limit, savings
-accounts may not. The domain is deliberately trivial, so all attention stays on RobotCode.
+## The demo project
+
+In this repository, we have a small, realistic project that is used in all exercises.  
+It implements a simple banking domain with accounts, deposits, withdrawals and transfers.  
+Checking accounts may be overdrawn up to their limit, savings accounts may not.  
+The domain is deliberately trivial, so all attention stays on RobotCode.
 
 ```text
 bank/BankLibrary.py        Robot Framework keywords (in-memory bank, or the web service if ${BANK_URL} is set)
