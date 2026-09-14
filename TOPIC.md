@@ -33,7 +33,9 @@ terminal, CI and AI agents.
 
 - **Small, orthogonal profiles**, one per option, combined freely: `robotcode -p service -p smoke robot`.
 - **Named combinations** through inheritance: `inherits = ["service", "regression", "ci"]`.
-- **`extend-*` keys** (`extend-excludes`, `extend-variables`, …) add to inherited values; the plain keys replace them.
+- **`extend-*` keys** (`extend-excludes`, `extend-variables`, …) add to inherited or combined values; the plain keys
+  replace them. That matters as soon as profiles are combined: with `excludes` in both `local` and `ci`,
+  `-p local -p ci` would silently run the integration tests again.
 - **Conditions and defaults:** `enabled = { if = 'environ.get("CI") == "true"' }`, `default-profiles = [...]`.
 - **Inline documentation** while editing `robot.toml`: hover a key, get completion and validation
   (JSON schema via *Even Better TOML*, since RobotCode 2.6). Typos matter: the runner silently ignores unknown keys.
@@ -55,7 +57,7 @@ terminal, CI and AI agents.
 
    [profiles.local]
    description = "Run against the in-memory bank; skip tests that need the web service"
-   excludes = ["integration"]
+   extend-excludes = ["integration"]
 
    [profiles.service]
    description = "Run against the bank web service on localhost:8765"
@@ -71,7 +73,7 @@ terminal, CI and AI agents.
 
    [profiles.ci]
    description = "Settings for CI pipelines: separate output folder, xUnit report, compact console"
-   excludes = ["wip"]
+   extend-excludes = ["wip"]
    output-dir = "results/ci"
    xunit = "xunit.xml"
    console = "dotted"
@@ -83,6 +85,7 @@ terminal, CI and AI agents.
    robotcode profiles list
    robotcode -p service -p smoke profiles show     # the merged result
    robotcode -p local -p smoke robot
+   robotcode -p local -p ci profiles show          # both exclusions survive thanks to extend-excludes
    ```
 
 4. Type `include` instead of `includes` in `[profiles.smoke]` — the editor underlines it, while
@@ -126,13 +129,19 @@ inherits = ["service", "regression", "ci"]
 `excludes = [...]` in `nightly` replaces the list inherited from `ci`. There is an `extend-` variant of the key.
 </details>
 
-<details><summary>Hint 3 — what did I actually configure?</summary>
+<details><summary>Hint 3 — <code>excludes</code> or <code>extend-excludes</code>?</summary>
+
+Use `extend-excludes` in profiles that are meant to be combined or inherited. Plain `excludes` is for a profile that
+deliberately defines the complete list.
+</details>
+
+<details><summary>Hint 4 — what did I actually configure?</summary>
 
 `robotcode -p nightly profiles show` prints the fully merged configuration. `robotcode config info list` lists
 every valid key.
 </details>
 
-<details><summary>Hint 4 — the bonus question</summary>
+<details><summary>Hint 5 — the bonus question</summary>
 
 A profile whose `enabled` condition is false contributes nothing — not even to profiles that inherit it.
 </details>
