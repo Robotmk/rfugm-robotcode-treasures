@@ -3,8 +3,9 @@
 Hands-on workshop — Robot Framework User Group Munich, September 2026.
 
 Most people know [RobotCode](https://robotcode.io) as *the VS Code extension for Robot Framework*: syntax
-highlighting, code completion, a ▶ button. That is only its most visible face. Tonight we dig out the treasures
-that do not catch the eye — and try every one of them on a small, realistic project.
+highlighting, code completion, a ▶ button.  
+That is only its most visible face.  
+In this meetup, we dig out the treasures of RobotCode — and try every one of them on a small, realistic project.
 
 ## What is RobotCode?
 
