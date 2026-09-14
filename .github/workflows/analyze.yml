@@ -1,0 +1,25 @@
+# Static analysis with RobotCode — findings appear as annotations and in GitHub code scanning.
+# Triggered manually here so the workshop repository stays quiet; use `on: [push, pull_request]` in real projects.
+name: RobotCode Analyze
+
+on:
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - run: uv sync
+      # Inline annotations on the changed lines of a pull request
+      - run: uv run robotcode analyze code --collect-unused --output-format github --exit-code-mask warn,info,hint
+      # Full report for GitHub code scanning; never fails the job, the step above does
+      - run: uv run robotcode analyze code --collect-unused --output-format sarif --output-file robotcode.sarif
+        continue-on-error: true
+      - uses: github/codeql-action/upload-sarif@v4
+        with:
+          sarif_file: robotcode.sarif

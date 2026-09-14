@@ -52,8 +52,12 @@ class BankLibrary:
 
     @keyword
     def transfer(self, source: str, target: str, amount: int) -> None:
-        """Moves ``amount`` from ``source`` to ``target``."""
+        """Moves ``amount`` from ``source`` to ``target``.
+
+        Sets the test variable ``${LAST_TRANSFER_AMOUNT}`` for later checks.
+        """
         self.bank.transfer(source, target, amount)
+        BuiltIn().set_test_variable("${LAST_TRANSFER_AMOUNT}", amount)
 
     @keyword
     def get_balance(self, owner: str) -> int:
