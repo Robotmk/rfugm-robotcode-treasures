@@ -1,0 +1,150 @@
+#!/usr/bin/env bash
+# Jump between the chapters of the RobotCode Treasures workshop.
+#
+#   ./topic                 list all chapters
+#   ./topic 05              switch to chapter 5 (your changes are saved and restored automatically)
+#   ./topic 05 --solution   switch to the model solution of chapter 5
+#   ./topic main            back to the start
+#   ./topic check           compare your work with the solution of the current chapter
+#   ./topic reset           throw away your changes in the current chapter
+set -euo pipefail
+
+cd "$(git rev-parse --show-toplevel)"
+AUTOSAVE="topic-autosave:"
+
+die() { echo "topic: $*" >&2; exit 1; }
+current() { git symbolic-ref --quiet --short HEAD || echo "(detached)"; }
+
+branches() { # glob below refs/heads — local and origin branches, unique
+  {
+    git for-each-ref --format='%(refname:short)' "refs/heads/$1"
+    git for-each-ref --format='%(refname:lstrip=3)' "refs/remotes/origin/$1"
+  } | sort -u
+}
+
+ref_of() { # a readable ref for a branch that may only exist on origin
+  if git show-ref --verify --quiet "refs/heads/$1"; then echo "$1"; else echo "origin/$1"; fi
+}
+
+fetched=""
+find_branch() { # kind (topic|solution), chapter number
+  local number found
+  [[ "$2" =~ ^[0-9]+$ ]] || die "'$2' is not a chapter number. Run ./topic to list the chapters."
+  number="$(printf '%02d' "$((10#$2))")"
+  found="$(branches "$1/$number-*" | head -n 1)"
+  if [ -z "$found" ] && [ -z "$fetched" ] && git remote get-url origin >/dev/null 2>&1; then
+    fetched=1
+    git fetch --quiet origin || true
+    found="$(branches "$1/$number-*" | head -n 1)"
+  fi
+  [ -n "$found" ] || die "there is no chapter $number. Run ./topic to list the chapters."
+  echo "$found"
+}
+
+title() {
+  git show "$(ref_of "$1"):TOPIC.md" 2>/dev/null | sed -n 's/^# //p' | head -n 1
+}
+
+list() {
+  local here chapter number marker
+  here="$(current)"
+  echo "RobotCode Treasures — chapters"
+  echo
+  marker=" "; [ "$here" = main ] && marker=">"
+  printf ' %s 00  %-28s %s\n' "$marker" main "Intro and agenda (README.md)"
+  while read -r chapter; do
+    [ -n "$chapter" ] || continue
+    number="${chapter#topic/}"; number="${number%%-*}"
+    marker=" "
+    [[ "$here" == "topic/$number-"* ]] && marker=">"
+    [[ "$here" == "solution/$number-"* ]] && marker="✔"
+    printf ' %s %s  %-28s %s\n' "$marker" "$number" "$chapter" "$(title "$chapter")"
+  done < <(branches 'topic/*')
+  echo
+  echo "Switch with ./topic <number>   ·   solution: ./topic <number> --solution   ·   compare: ./topic check"
+}
+
+save_changes() {
+  local from="$1"
+  if [ -n "$(git status --porcelain)" ]; then
+    git stash push --quiet --include-untracked -m "$AUTOSAVE$from"
+    echo "Saved your changes on $from — they come back when you return to it."
+  fi
+}
+
+restore_changes() {
+  local target="$1" stash
+  stash="$(git stash list --format='%gd %gs' | awk -v msg=": $AUTOSAVE$target" 'index($0, msg) == length($0) - length(msg) + 1 { print $1; exit }')"
+  if [ -n "$stash" ]; then
+    git stash pop --quiet "$stash"
+    echo "Restored your earlier changes on $target."
+  fi
+}
+
+switch_to() {
+  local target="$1" from
+  from="$(current)"
+  if [ "$from" = "$target" ]; then
+    echo "You are already on $target."
+    return
+  fi
+  save_changes "$from"
+  if git show-ref --verify --quiet "refs/heads/$target"; then
+    git switch --quiet "$target"
+  else
+    git switch --quiet --create "$target" --track "origin/$target"
+  fi
+  restore_changes "$target"
+  echo "Now on $target${2:+ — $2}"
+  if [ ! -d .venv ] && [[ "$target" != topic/01-* && "$target" != solution/01-* ]]; then
+    echo "Note: no .venv yet — create the environment first (chapter 1: uv sync)."
+  fi
+  if [ -f TOPIC.md ] && [ -z "${TOPIC_NO_OPEN:-}" ] && command -v code >/dev/null 2>&1; then
+    code TOPIC.md
+  fi
+}
+
+check_solution() {
+  local here solution
+  here="$(current)"
+  case "$here" in
+    topic/*) solution="solution/${here#topic/}" ;;
+    solution/*) die "you are on the solution branch already." ;;
+    *) die "switch to a chapter first (./topic <number>)." ;;
+  esac
+  git rev-parse --verify --quiet "$(ref_of "$solution")" >/dev/null || git fetch --quiet origin || true
+  echo "Differences between the solution ($solution, '-') and your work ('+'):"
+  echo
+  git --no-pager diff "$(ref_of "$solution")" -- . ':(exclude)SOLUTION.md'
+  if [ -n "$(git ls-files --others --exclude-standard)" ]; then
+    echo
+    echo "New files of yours (not in the diff above):"
+    git ls-files --others --exclude-standard | sed 's/^/  /'
+  fi
+}
+
+reset_chapter() {
+  local answer
+  read -r -p "Throw away all your changes on $(current)? [y/N] " answer
+  [[ "$answer" =~ ^[yY] ]] || { echo "Nothing changed."; return; }
+  git reset --quiet --hard
+  git clean --quiet -fd
+  echo "Back to the original state of $(current)."
+}
+
+case "${1:-}" in
+  "" | list) list ;;
+  -h | --help | help) sed -n '2,10s/^# \{0,1\}//p' "$0" ;;
+  main | 0 | 00) switch_to main "Intro and agenda" ;;
+  check) check_solution ;;
+  reset) reset_chapter ;;
+  *)
+    if [ "${2:-}" = "--solution" ]; then
+      branch="$(find_branch solution "$1")"
+      switch_to "$branch" "model solution"
+    else
+      branch="$(find_branch topic "$1")"
+      switch_to "$branch" "$(title "$branch")"
+    fi
+    ;;
+esac
