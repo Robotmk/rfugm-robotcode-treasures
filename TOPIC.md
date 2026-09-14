@@ -2,7 +2,7 @@
 
 > ⏱ 15 minutes · 📚 [Wrapper reference](https://robotcode.io/03_reference/wrapper) · [What's new in 2.7](https://robotcode.io/news/2026-07-15-whats-new-v2.7.0)
 
-## 😖 Pain
+## Pain
 
 The integration tests in `tests/api` need the bank web service. So everybody has to remember:
 
@@ -14,7 +14,7 @@ The ▶ button and the debugger in VS Code know nothing about step 1. CI has its
 And when a run crashes, the service keeps running in the background — the next run prints
 `Address already in use`, the tests turn green anyway… against a stale service with yesterday's code.
 
-## 💎 Treasure
+## Treasure
 
 **The wrapper** (new in RobotCode 2.7): the test execution runs *inside* a command of your choice. The command
 prepares the environment, runs the tests, and cleans up afterwards.
@@ -33,7 +33,7 @@ wrapper = ["./with-bank-service.sh"]
 
 This branch contains `with-bank-service.sh`, a first, deliberately naive version of such a script.
 
-## 🖥️ Demo
+## Demo
 
 1. Without the service, the integration tests fail:
 
@@ -65,19 +65,19 @@ This branch contains `with-bank-service.sh`, a first, deliberately naive version
    pkill -f bank.service                       # clean up by hand
    ```
 
-## 🛠️ Exercise
+## Exercise
 
 1. Add the wrapper to the `service` profile (if you have not typed along).
 2. Fix `with-bank-service.sh` so that the service is **always** stopped — after passing, failing and aborted runs —
    and the script still exits with the **exit code of the test run** (CI depends on it).
 
-### ⭐ Bonus
+### Bonus
 
 - Replace `sleep 1` by polling `http://localhost:8765/health` until the service answers, with a timeout and a clear
   error message.
 - Fail with a helpful message if a bank service is already running on the port.
 
-## 💡 Hints
+## Hints
 
 <details><summary>Hint 1 — why the service survives</summary>
 
@@ -106,7 +106,7 @@ not change it. A `kill` *after* `"$@"` would.
 `curl -fs http://localhost:8765/health` returns 0 once the service answers. Try it in a loop with `sleep 0.1`.
 </details>
 
-## ✅ Self-check
+## Self-check
 
 ```bash
 robotcode -p service robot tests/api
@@ -118,6 +118,6 @@ curl -fs localhost:8765/health || echo "service stopped"
 - The second run fails with `exit code: 3` (not 0).
 - Afterwards: `service stopped`.
 
-## 🔑 Takeaway
+## Takeaway
 
 **Put setup and teardown of the test environment into a wrapper — the editor, the terminal and CI all get it for free.**
