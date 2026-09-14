@@ -2,13 +2,13 @@
 
 > ⏱ 15 minutes · 📚 [Analyzing code](https://robotcode.io/03_reference/analyzing-code) · [Diagnostics modifiers](https://robotcode.io/03_reference/diagnostics-modifiers)
 
-## 😖 Pain
+## Pain
 
 A typo in a keyword name or a variable nobody defines — the editor shows a red squiggle, but only for the person
 who has the file open. Everybody else finds out in the nightly run, hours later. Meanwhile, resource files collect
 keywords nobody calls any more, and a handful of "known false positives" train the team to ignore the Problems view.
 
-## 💎 Treasure
+## Treasure
 
 **`robotcode analyze code`** runs the editor's analysis on the command line — the same rules, the same
 `robot.toml`, no test execution.
@@ -34,7 +34,7 @@ keywords nobody calls any more, and a handful of "known false positives" train t
 This branch has three findings planted: an unused keyword, an unused variable, and a variable the library creates
 at runtime (`${LAST_TRANSFER_AMOUNT}`, set by `Transfer`) — invisible to static analysis.
 
-## 🖥️ Demo
+## Demo
 
 ```bash
 robotcode analyze code
@@ -49,26 +49,26 @@ Then:
 - open `.github/workflows/analyze.yml` — annotations plus a SARIF upload for GitHub code scanning;
 - open `resources/banking.resource` — Robocop flags `Set Variable` (use `VAR`) in the Problems view; run *Format Document*.
 
-## 🛠️ Exercise
+## Exercise
 
 1. Make `robotcode analyze code --collect-unused` exit with code `0`:
    - remove what is really unused,
    - keep `${LAST_TRANSFER_AMOUNT}` in the test, and tell RobotCode that this one finding is expected — **only on that line**.
 2. Check that the tests still pass: `robotcode robot tests/accounts`.
 
-### ⭐ Bonus
+### Bonus
 
 - Produce GitHub annotations and make the command fail **only on errors**, not on warnings.
 - Write the unused findings as a SARIF file and count the results with `jq '.runs[0].results | length'`.
 
-### 💎 Bonus treasures (if time permits)
+### Bonus treasures (if time permits)
 
 - **`Literal` completion:** in a test, type `Open Account    alice    type=` and press `Ctrl+Space`. The allowed values
   come from the type hint `Literal["checking", "savings"]` in `bank/BankLibrary.py` (RobotCode 2.5).
 - **Experimental SemanticModel:** set `"robotcode.experimental.semanticModel": true` (or
   `semantic-model = true` under `[tool.robotcode-analyze]`) for deeper variable resolution — a preview of what comes next.
 
-## 💡 Hints
+## Hints
 
 <details><summary>Hint 1 — what is "really unused"?</summary>
 
@@ -90,7 +90,7 @@ A comment at the end of the line applies to that line only:
 `echo $?` right after the command. Mask the severities that must not fail the build with `--exit-code-mask`.
 </details>
 
-## ✅ Self-check
+## Self-check
 
 ```bash
 robotcode analyze code --collect-unused; echo "exit code: $?"
@@ -101,6 +101,6 @@ Files: 4, Errors: 0, Warnings: 0, Infos: 0, Hints: 0
 exit code: 0
 ```
 
-## 🔑 Takeaway
+## Takeaway
 
 **Catch errors before running tests — in the editor, on the command line and in CI, with the same rules.**
