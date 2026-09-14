@@ -101,6 +101,7 @@ Use the `./topic` script in the terminal:
 ./topic reset           # start the current chapter over
 ./topic main            # back to this page
 ./topic list            # plain list of all chapters
+./topic update          # get the latest version of all chapters
 ```
 
 Your changes are never lost: when you leave a chapter, `./topic` saves (stashes) them, and when you come back they are
