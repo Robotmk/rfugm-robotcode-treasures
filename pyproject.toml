@@ -12,3 +12,7 @@ dependencies = [
 
 [tool.uv]
 package = false
+
+[tool.robocop.lint]
+# Test names in this project are written to be self-explanatory.
+ignore = ["DOC02"]
