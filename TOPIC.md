@@ -2,7 +2,7 @@
 
 > ⏱ 15 minutes · 📚 [Configuration reference](https://robotcode.io/03_reference/config) · [Ignoring files](https://robotcode.io/03_reference/ignoring-files)
 
-## 😖 Pain
+## Pain
 
 A long command line is not the problem — a `launch.json` entry can hold that. The problem is **combinations**.
 Our bank tests vary along three independent dimensions:
@@ -26,7 +26,7 @@ AI agent gets none of the `launch.json` configurations anyway.
 On top of that, `tests/archive/legacy.robot` — old tests for a system that no longer exists — breaks every run and
 fills the Problems view.
 
-## 💎 Treasure
+## Treasure
 
 `robot.toml` is read by **everything that runs `robotcode`**: the ▶ button, the Test Explorer, the debugger, the
 terminal, CI and AI agents.
@@ -42,7 +42,7 @@ terminal, CI and AI agents.
 - **`.robotignore`** (gitignore syntax) keeps folders away from discovery, analysis, the language server and test
   runs. Pitfall: if a root `.robotignore` exists, RobotCode ignores `.gitignore` completely.
 
-## 🖥️ Demo
+## Demo
 
 1. Show `launch.json` and `.gitlab-ci.yml`; count the port occurrences:
 
@@ -99,7 +99,7 @@ terminal, CI and AI agents.
    robotcode discover files                 # gone — also from the Problems view and from test runs
    ```
 
-## 🛠️ Exercise
+## Exercise
 
 1. Add the five profiles from the demo to `robot.toml` (if you have not typed along).
 2. Create a profile **`nightly`** that inherits `service`, `regression` and `ci`, and additionally excludes the tag
@@ -108,13 +108,13 @@ terminal, CI and AI agents.
 4. Delete `.vscode/launch.json`.
 5. Add a `.robotignore` for `tests/archive/`.
 
-### ⭐ Bonus
+### Bonus
 
 - Make `ci` active only when the environment variable `CI` is `true`. Then run
   `robotcode -p nightly discover tests` on your machine: why does a `wip` test suddenly show up?
 - Make `local` + `smoke` the default when no profile is given.
 
-## 💡 Hints
+## Hints
 
 <details><summary>Hint 1 — inheriting several profiles</summary>
 
@@ -146,7 +146,7 @@ every valid key.
 A profile whose `enabled` condition is false contributes nothing — not even to profiles that inherit it.
 </details>
 
-## ✅ Self-check
+## Self-check
 
 ```bash
 robotcode -p nightly profiles show
@@ -169,6 +169,6 @@ robotcode discover files
 
 - `discover files` does not list `tests/archive/legacy.robot`.
 
-## 🔑 Takeaway
+## Takeaway
 
 **Model each dimension as a small profile and combine them — never maintain a matrix of copies.**
