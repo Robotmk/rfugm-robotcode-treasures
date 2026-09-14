@@ -5,12 +5,22 @@ Hands-on workshop — Robot Framework User Group Munich, September 2026.
 Most people know [RobotCode](https://robotcode.io) as *the VS Code extension for Robot Framework*: syntax
 highlighting, code completion, a ▶ button.  
 That is only its most visible face.  
+
 In this meetup, we dig out the treasures of RobotCode — and try every one of them on a small, realistic project.
 
 ## What is RobotCode?
 
-RobotCode is a toolkit built around one core that uses Robot Framework's own parser. The same core powers the
-editor, the command line, CI pipelines and AI agents, and all of them read the same `robot.toml`.
+RobotCode is a toolkit built around **one core* that uses Robot Framework's own parser.  
+The same core powers the 
+
+- editor, 
+- the command line, 
+- CI pipelines and 
+- AI agents, 
+
+and, importantly, all of them read the same `robot.toml`.
+
+> **Configure once, use everywhere:** what you set up in `robot.toml` is what the ▶ button, your terminal, the pipeline and an AI agent all see.
 
 ```mermaid
 flowchart LR
@@ -41,9 +51,6 @@ flowchart LR
     CLI --> AI
 ```
 
-**Configure once, use everywhere:** what you set up in `robot.toml` is what the ▶ button, your terminal, the
-pipeline and an AI agent all see.
-
 ## Get started
 
 ### In GitHub Codespaces (recommended)
@@ -54,10 +61,18 @@ Creating it is the first exercise.
 
 ### Locally
 
-You need Python 3.12+, [uv](https://docs.astral.sh/uv/getting-started/installation/) (or pip), VS Code with the
-extensions *RobotCode*, *Python* and *Even Better TOML*, and a clone of this repository with all branches.
+What is already available?
 
-## Agenda
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) (or pip)
+- VS Code with the extensions 
+    - *RobotCode*
+    - *Python* 
+    - *Even Better TOML*
+    
+and a clone of this repository with all branches.
+
+## Agenda of the Meetup
 
 | # | Chapter | Switch with |
 |---|---|---|
@@ -76,7 +91,6 @@ extensions *RobotCode*, *Python* and *Even Better TOML*, and a clone of this rep
 
 ## Moving between chapters
 
-Every chapter lives on its own branch and starts from this clean project, so you can join at any chapter.
 Use the `./topic` script in the terminal:
 
 ```bash
