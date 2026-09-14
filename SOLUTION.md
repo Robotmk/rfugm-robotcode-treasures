@@ -47,4 +47,4 @@ $ jq '.runs[0].results | length' robotcode.sarif
 3
 ```
 
-With only the error remaining masked out, warnings still show up as annotations but no longer fail the job.
+Warnings still show up as annotations, but only the error makes the job fail (exit code 1 instead of 3).
