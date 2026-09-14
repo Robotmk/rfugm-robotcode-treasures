@@ -11,7 +11,7 @@ Five tests from `overdraft.robot`, including `Monthly Interest Is Credited` (tag
 ## 2. Why `Transfer Through The Service` is missing
 
 No `-p` was given, so `default-profiles = ["local"]` from `robot.toml` applies, and `local` has
-`excludes = ["integration"]`. `discover` honours that exactly like `robot` does — which is the point.
+`extend-excludes = ["integration"]`. `discover` honours that exactly like `robot` does — which is the point.
 
 ## 3. As the nightly service run sees it
 
