@@ -94,12 +94,13 @@ and a clone of this repository with all branches.
 Use the `./topic` script in the terminal:
 
 ```bash
-./topic                 # list all chapters
-./topic 05              # go to chapter 5 and open its TOPIC.md
+./topic                 # choose a chapter from a menu (↑/↓, Enter; s = solution, q = quit)
+./topic 05              # go to chapter 5 directly and open its TOPIC.md
 ./topic 05 --solution   # look at the model solution
 ./topic check           # compare your work with the solution
 ./topic reset           # start the current chapter over
 ./topic main            # back to this page
+./topic list            # plain list of all chapters
 ```
 
 Your changes are never lost: when you leave a chapter, `./topic` saves them, and when you come back they are
