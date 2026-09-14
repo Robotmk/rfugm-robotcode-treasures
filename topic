@@ -8,6 +8,7 @@
 #   ./topic main            back to the start
 #   ./topic check           compare your work with the solution of the current chapter
 #   ./topic reset           throw away your changes in the current chapter
+#   ./topic update          get the latest version of all chapters from GitHub
 
 # Started with `sh topic` or from another shell? Re-run with bash.
 if [ -z "${BASH_VERSION:-}" ] || (shopt -oq posix) 2>/dev/null; then exec bash "$0" "$@"; fi
@@ -209,6 +210,46 @@ switch_to() {
   fi
 }
 
+update_all() {
+  local here branch old new updated=0 skipped=0 saved=""
+  git remote get-url origin >/dev/null 2>&1 || die "there is no remote 'origin' to update from."
+  echo "Fetching the latest chapters from origin …"
+  git fetch --quiet --prune origin
+  here="$(current)"
+
+  while read -r branch; do
+    git show-ref --verify --quiet "refs/remotes/origin/$branch" || continue
+    old="$(git rev-parse "refs/heads/$branch")"
+    new="$(git rev-parse "refs/remotes/origin/$branch")"
+    [ "$old" != "$new" ] || continue
+    if ! git merge-base --is-ancestor "$old" "$new"; then
+      echo "  skipped  $branch — it has commits of its own; update it with git merge origin/$branch"
+      skipped=$((skipped + 1))
+      continue
+    fi
+    if [ "$branch" = "$here" ]; then
+      if [ -n "$(git status --porcelain)" ]; then
+        git stash push --quiet --include-untracked -m "topic-update:$branch"
+        saved=1
+      fi
+      git merge --quiet --ff-only "$new"
+      if [ -n "$saved" ] && ! git stash pop --quiet; then
+        echo "  conflict $branch — the update touched the same lines as your changes."
+        echo "           Fix the files marked by git status, or start over with ./topic reset."
+        echo "           Your changes are also kept in: git stash list"
+      fi
+    else
+      git update-ref "refs/heads/$branch" "$new" "$old"
+    fi
+    echo "  updated  $branch"
+    updated=$((updated + 1))
+  done < <(git for-each-ref --format='%(refname:short)' refs/heads)
+
+  echo
+  if [ "$updated" -eq 1 ]; then echo -n "1 branch updated"; else echo -n "$updated branches updated"; fi
+  echo ", $skipped skipped. Chapters you have not opened yet always come fresh from origin."
+}
+
 check_solution() {
   local here solution
   here="$(current)"
@@ -244,6 +285,7 @@ case "${1:-}" in
   main | 0 | 00) switch_to main "Intro and agenda" ;;
   check) check_solution ;;
   reset) reset_chapter ;;
+  update) update_all ;;
   *)
     if [ "${2:-}" = "--solution" ]; then
       branch="$(find_branch solution "$1")"
@@ -254,3 +296,4 @@ case "${1:-}" in
     fi
     ;;
 esac
+exit
