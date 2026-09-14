@@ -13,7 +13,7 @@
 [ INFO ] Bob has 30
 > .kw Open Account
 > Withdraw    alice    171
-Withdrawing 171 from 'alice' exceeds the limit: balance 70, limit 100.
+[ FAIL ] BankError: Withdrawing 171 from 'alice' exceeds the limit: balance 70, limit 100.
 > .save exploration.robot
 ```
 
