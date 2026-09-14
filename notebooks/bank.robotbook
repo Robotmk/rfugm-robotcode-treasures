@@ -33,7 +33,40 @@
       "cell_type": "code",
       "languageId": "robotframework-repl",
       "source": [
-        ""
+        "Open Account    alice",
+        "Deposit    alice    100",
+        "Get Balance    alice"
+      ],
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "languageId": "markdown",
+      "source": [
+        "## Ten deposits"
+      ],
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "languageId": "robotframework-repl",
+      "source": [
+        "Open Account    carol",
+        "FOR    ${i}    IN RANGE    10",
+        "    Deposit    carol    10",
+        "END",
+        "Balance Should Be    carol    100"
+      ],
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "languageId": "markdown",
+      "source": [
+        "## What I found out",
+        "",
+        "A checking account has an overdraft limit of **100** by default (`.kw Open Account`).",
+        "With a balance of 70, withdrawing 170 is still allowed; 171 fails with *exceeds the limit*."
       ],
       "outputs": []
     }
