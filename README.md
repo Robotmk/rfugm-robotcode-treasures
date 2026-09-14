@@ -3,13 +3,24 @@
 Hands-on workshop — Robot Framework User Group Munich, September 2026.
 
 Most people know [RobotCode](https://robotcode.io) as *the VS Code extension for Robot Framework*: syntax
-highlighting, code completion, a ▶ button. That is only its most visible face. Tonight we dig out the treasures
-that do not catch the eye — and try every one of them on a small, realistic project.
+highlighting, code completion, a ▶ button.  
+That is only its most visible face.  
+
+In this meetup, we dig out the treasures of RobotCode — and try every one of them on a small, realistic project.
 
 ## What is RobotCode?
 
-RobotCode is a toolkit built around one core that uses Robot Framework's own parser. The same core powers the
-editor, the command line, CI pipelines and AI agents, and all of them read the same `robot.toml`.
+RobotCode is a toolkit built around **one core* that uses Robot Framework's own parser.  
+The same core powers the 
+
+- editor, 
+- the command line, 
+- CI pipelines and 
+- AI agents, 
+
+and, importantly, all of them read the same `robot.toml`.
+
+> **Configure once, use everywhere:** what you set up in `robot.toml` is what the ▶ button, your terminal, the pipeline and an AI agent all see.
 
 ```mermaid
 flowchart LR
@@ -40,9 +51,6 @@ flowchart LR
     CLI --> AI
 ```
 
-**Configure once, use everywhere:** what you set up in `robot.toml` is what the ▶ button, your terminal, the
-pipeline and an AI agent all see.
-
 ## Get started
 
 ### In GitHub Codespaces (recommended)
@@ -53,10 +61,18 @@ Creating it is the first exercise.
 
 ### Locally
 
-You need Python 3.12+, [uv](https://docs.astral.sh/uv/getting-started/installation/) (or pip), VS Code with the
-extensions *RobotCode*, *Python* and *Even Better TOML*, and a clone of this repository with all branches.
+What is already available?
 
-## Agenda
+- Python 3.12+
+- [uv](https://docs.astral.sh/uv/getting-started/installation/) (or pip)
+- VS Code with the extensions 
+    - *RobotCode*
+    - *Python* 
+    - *Even Better TOML*
+    
+and a clone of this repository with all branches.
+
+## Agenda of the Meetup
 
 | # | Chapter | Switch with |
 |---|---|---|
@@ -75,7 +91,6 @@ extensions *RobotCode*, *Python* and *Even Better TOML*, and a clone of this rep
 
 ## Moving between chapters
 
-Every chapter lives on its own branch and starts from this clean project, so you can join at any chapter.
 Use the `./topic` script in the terminal:
 
 ```bash
@@ -88,14 +103,16 @@ Use the `./topic` script in the terminal:
 ./topic list            # plain list of all chapters
 ```
 
-Your changes are never lost: when you leave a chapter, `./topic` saves them, and when you come back they are
-restored. Each chapter's `TOPIC.md` follows the same structure — 😖 pain, 💎 treasure, 🖥️ demo,
-🛠️ exercise, 💡 hints, ✅ self-check and 🔑 takeaway.
+Your changes are never lost: when you leave a chapter, `./topic` saves (stashes) them, and when you come back they are
+restored.  
 
-## The demo project: a tiny bank
 
-Accounts, deposits, withdrawals and transfers. Checking accounts may be overdrawn up to their limit, savings
-accounts may not. The domain is deliberately trivial, so all attention stays on RobotCode.
+## The demo project
+
+In this repository, we have a small, realistic project that is used in all exercises.  
+It implements a simple banking domain with accounts, deposits, withdrawals and transfers.  
+Checking accounts may be overdrawn up to their limit, savings accounts may not.  
+The domain is deliberately trivial, so all attention stays on RobotCode.
 
 ```text
 bank/BankLibrary.py        Robot Framework keywords (in-memory bank, or the web service if ${BANK_URL} is set)
@@ -105,6 +122,15 @@ tests/accounts/            smoke and regression tests
 tests/api/                 integration tests against the web service
 robot.toml                 profiles: local, service, smoke, regression, ci
 ```
+
+## Let's get started
+
+Now it is time to switch to the first topic: 
+
+```
+./topic 01
+```
+
 
 ## Links
 
