@@ -30,5 +30,5 @@ for topic in $(git for-each-ref --format='%(refname:short)' 'refs/heads/topic/*'
 done
 
 if [ "$push" = "--push" ]; then
-  git push origin main 'refs/heads/topic/*' 'refs/heads/solution/*'
+  git push origin main 'refs/heads/topic/*:refs/heads/topic/*' 'refs/heads/solution/*:refs/heads/solution/*'
 fi
