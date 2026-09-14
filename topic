@@ -8,6 +8,7 @@
 #   ./topic main            back to the start
 #   ./topic check           compare your work with the solution of the current chapter
 #   ./topic reset           throw away your changes in the current chapter
+
 # Started with `sh topic` or from another shell? Re-run with bash.
 if [ -z "${BASH_VERSION:-}" ] || (shopt -oq posix) 2>/dev/null; then exec bash "$0" "$@"; fi
 set -euo pipefail
@@ -239,7 +240,7 @@ reset_chapter() {
 case "${1:-}" in
   "") if interactive; then menu; else list; fi ;;
   list) list ;;
-  -h | --help | help) sed -n '2,11s/^# \{0,1\}//p' "$0" ;;
+  -h | --help | help) awk 'NR > 1 && /^#/ { sub(/^# ?/, ""); print; next } NR > 1 { exit }' "$0" ;;
   main | 0 | 00) switch_to main "Intro and agenda" ;;
   check) check_solution ;;
   reset) reset_chapter ;;
