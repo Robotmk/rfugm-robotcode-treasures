@@ -2,7 +2,7 @@
 
 > ⏱ 8 minutes · 📚 [Discovering tests](https://robotcode.io/03_reference/discovering-tests)
 
-## 😖 Pain
+## Pain
 
 "Which tests are tagged `smoke`?" The usual answer:
 
@@ -19,7 +19,7 @@ Two hits — but how many *tests* is that? `Test Tags` applies to every test in 
 `__init__.robot`, profiles filter tests, `.robotignore` hides files, pre-run modifiers change the suite. `grep` knows
 none of that. You end up running the tests just to find out which ones would run.
 
-## 💎 Treasure
+## Treasure
 
 `robotcode discover` builds the real suite tree **without executing anything** — with the same configuration,
 profiles and filters that `robotcode robot` would use.
@@ -35,7 +35,7 @@ profiles and filters that `robotcode robot` would use.
 Since RobotCode 2.6: `--search` / `--search-regex` across names, tags and documentation, Markdown output in the
 terminal, a compact diagnostics summary, and `--format json` for scripts.
 
-## 🖥️ Demo
+## Demo
 
 ```bash
 robotcode discover tags --tests
@@ -45,18 +45,18 @@ robotcode -p service discover tests -i smoke        # a different profile, a dif
 robotcode --format json discover tests -i smoke | jq -r '.items[].longname'
 ```
 
-## 🛠️ Exercise
+## Exercise
 
 1. List all tests tagged `regression` but **not** `slow`.
 2. Look closely at the result: `Transfer Through The Service` is tagged `regression`, yet it is missing. Why?
 3. Now list the same selection as the **nightly service run** would see it.
 
-### ⭐ Bonus
+### Bonus
 
 Produce a plain list of long names — one per line, nothing else — for the tests of exercise 3. A CI pipeline could
 use such a list to split tests across parallel jobs (`robotcode robot --by-longname …`).
 
-## 💡 Hints
+## Hints
 
 <details><summary>Hint 1 — tag filters</summary>
 
@@ -74,7 +74,7 @@ Which profile is active when you do not pass `-p`? Look at `default-profiles` in
 `--format json` is a global option and goes **before** the subcommand. Every entry in `items` has a `longname`.
 </details>
 
-## ✅ Self-check
+## Self-check
 
 ```bash
 robotcode discover tests -i regression -e slow
@@ -93,6 +93,6 @@ Tests.Accounts.Overdraft.Monthly Interest Is Credited
 With `-p service`, two more appear: `Tests.Api.Service.Transfer Through The Service` and
 `Tests.Api.Service.Concurrent Transfers Keep Balances Consistent`.
 
-## 🔑 Takeaway
+## Takeaway
 
 **Ask `discover`, not `grep` — it sees the project exactly the way the runner does.**
