@@ -1,0 +1,41 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "languageId": "markdown",
+      "source": [
+        "# Exploring the bank",
+        "",
+        "Every code cell runs Robot Framework statements \u2014 keyword calls, variables, `FOR`, `IF` \u2014 in one live session.",
+        "Run a cell with **Shift+Enter**. Select the kernel *Robot Framework REPL* if VS Code asks."
+      ],
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "languageId": "robotframework-repl",
+      "source": [
+        "Import Library    bank.BankLibrary"
+      ],
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "languageId": "markdown",
+      "source": [
+        "## Your turn",
+        "",
+        "Open an account for `alice`, deposit some money and look at the balance."
+      ],
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "languageId": "robotframework-repl",
+      "source": [
+        ""
+      ],
+      "outputs": []
+    }
+  ]
+}
