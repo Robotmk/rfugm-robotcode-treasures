@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 # Jump between the chapters of the RobotCode Treasures workshop.
 #
-#   ./topic                 list all chapters
+#   ./topic                 choose a chapter with the arrow keys
+#   ./topic list            list all chapters
 #   ./topic 05              switch to chapter 5 (your changes are saved and restored automatically)
 #   ./topic 05 --solution   switch to the model solution of chapter 5
 #   ./topic main            back to the start
 #   ./topic check           compare your work with the solution of the current chapter
 #   ./topic reset           throw away your changes in the current chapter
+# Started with `sh topic` or from another shell? Re-run with bash.
+if [ -z "${BASH_VERSION:-}" ] || (shopt -oq posix) 2>/dev/null; then exec bash "$0" "$@"; fi
 set -euo pipefail
 
 cd "$(git rev-parse --show-toplevel)"
@@ -62,6 +65,107 @@ list() {
   done < <(branches 'topic/*')
   echo
   echo "Switch with ./topic <number>   ·   solution: ./topic <number> --solution   ·   compare: ./topic check"
+}
+
+# --- interactive menu -----------------------------------------------------------------------
+
+interactive() { # true if we can draw a menu
+  [ -t 0 ] && [ -t 1 ] && [ "${TERM:-dumb}" != dumb ]
+}
+
+menu() {
+  local -a items labels
+  local here chapter number i selected=0 count key rest target solution message=""
+  here="$(current)"
+
+  items=(main)
+  labels=("Intro and agenda")
+  while read -r chapter; do
+    [ -n "$chapter" ] || continue
+    items+=("$chapter")
+    labels+=("$(title "$chapter" | sed 's/^Chapter [0-9]* — //')")
+  done < <(branches 'topic/*')
+  count=${#items[@]}
+
+  for ((i = 0; i < count; i++)); do
+    number="$(menu_number "${items[i]}")"
+    if [ "$here" = "${items[i]}" ] || [[ "$here" == "solution/$number-"* ]]; then selected=$i; fi
+  done
+
+  printf '\033[?25l'                                  # hide the cursor
+  trap 'printf "\033[?25h"' EXIT
+  trap 'printf "\033[?25h\n"; exit 130' INT
+
+  printf '\n \033[1mRobotCode Treasures\033[0m — choose a chapter\n\n'
+  menu_draw
+  while true; do
+    IFS= read -rsn1 key || key=q
+    case "$key" in
+      $'\e')
+        IFS= read -rsn2 -t 1 rest || rest=""
+        case "$rest" in
+          '[A') selected=$(((selected - 1 + count) % count)) ;;
+          '[B') selected=$(((selected + 1) % count)) ;;
+          '') break ;;                                # plain Esc
+        esac
+        ;;
+      k) selected=$(((selected - 1 + count) % count)) ;;
+      j) selected=$(((selected + 1) % count)) ;;
+      [0-9])
+        for ((i = 0; i < count; i++)); do
+          [ "$(menu_number "${items[i]}")" = "0$key" ] && selected=$i
+        done
+        ;;
+      '')                                             # Enter
+        target="${items[selected]}"
+        menu_close
+        if [ "$target" = main ]; then switch_to main "Intro and agenda"; else switch_to "$target" "$(title "$target")"; fi
+        return
+        ;;
+      s | S)
+        target="${items[selected]}"
+        if [ "$target" = main ]; then
+          message="The intro has no solution."
+        else
+          solution="$(find_branch solution "$(menu_number "$target")")"
+          menu_close
+          switch_to "$solution" "model solution"
+          return
+        fi
+        ;;
+      q | Q) break ;;
+    esac
+    printf '\033[%dA' $((count + 3))                   # back to the first menu line
+    menu_draw
+    message=""
+  done
+  menu_close
+  echo "Nothing changed — you are on $here."
+}
+
+menu_number() { # main → 00, topic/05-wrapper → 05
+  if [ "$1" = main ]; then echo 00; else local n="${1#*/}"; echo "${n%%-*}"; fi
+}
+
+menu_draw() {
+  local i number mark
+  for ((i = 0; i < count; i++)); do
+    number="$(menu_number "${items[i]}")"
+    mark=" "
+    if [ "$here" = "${items[i]}" ]; then mark="●"; elif [[ "$here" == "solution/$number-"* ]]; then mark="✔"; fi
+    if [ "$i" -eq "$selected" ]; then
+      printf ' \033[1;36m❯\033[0m %s \033[7m %s  %-56s \033[0m\033[K\n' "$mark" "$number" "${labels[i]}"
+    else
+      printf '   %s  %s  %-56s \033[K\n' "$mark" "$number" "${labels[i]}"
+    fi
+  done
+  printf '\n'
+  printf ' \033[2m↑/↓ move · Enter open · s solution · 0–9 jump · q quit\033[0m   \033[33m%s\033[0m\033[K\n' "$message"
+  printf ' \033[2m● you are here · ✔ you are on its solution · branch: %s\033[0m\033[K\n' "${items[selected]}"
+}
+
+menu_close() {
+  printf '\033[?25h\n'
 }
 
 save_changes() {
@@ -133,8 +237,9 @@ reset_chapter() {
 }
 
 case "${1:-}" in
-  "" | list) list ;;
-  -h | --help | help) sed -n '2,10s/^# \{0,1\}//p' "$0" ;;
+  "") if interactive; then menu; else list; fi ;;
+  list) list ;;
+  -h | --help | help) sed -n '2,11s/^# \{0,1\}//p' "$0" ;;
   main | 0 | 00) switch_to main "Intro and agenda" ;;
   check) check_solution ;;
   reset) reset_chapter ;;
