@@ -1,0 +1,189 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Tests: local \u00b7 smoke \u00b7 dev",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--exclude",
+        "integration",
+        "--include",
+        "smoke"
+      ]
+    },
+    {
+      "name": "Tests: local \u00b7 smoke \u00b7 ci",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--exclude",
+        "integration",
+        "--include",
+        "smoke",
+        "--exclude",
+        "wip",
+        "--outputdir",
+        "results/ci",
+        "--xunit",
+        "xunit.xml",
+        "--console",
+        "dotted"
+      ]
+    },
+    {
+      "name": "Tests: local \u00b7 regression \u00b7 dev",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--exclude",
+        "integration",
+        "--include",
+        "regression"
+      ]
+    },
+    {
+      "name": "Tests: local \u00b7 regression \u00b7 ci",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--exclude",
+        "integration",
+        "--include",
+        "regression",
+        "--exclude",
+        "wip",
+        "--outputdir",
+        "results/ci",
+        "--xunit",
+        "xunit.xml",
+        "--console",
+        "dotted"
+      ]
+    },
+    {
+      "name": "Tests: local \u00b7 all \u00b7 dev",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--exclude",
+        "integration"
+      ]
+    },
+    {
+      "name": "Tests: local \u00b7 all \u00b7 ci",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--exclude",
+        "integration",
+        "--exclude",
+        "wip",
+        "--outputdir",
+        "results/ci",
+        "--xunit",
+        "xunit.xml",
+        "--console",
+        "dotted"
+      ]
+    },
+    {
+      "name": "Tests: service \u00b7 smoke \u00b7 dev",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--variable",
+        "BANK_URL:http://localhost:8765",
+        "--include",
+        "smoke"
+      ]
+    },
+    {
+      "name": "Tests: service \u00b7 smoke \u00b7 ci",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--variable",
+        "BANK_URL:http://localhost:8765",
+        "--include",
+        "smoke",
+        "--exclude",
+        "wip",
+        "--outputdir",
+        "results/ci",
+        "--xunit",
+        "xunit.xml",
+        "--console",
+        "dotted"
+      ]
+    },
+    {
+      "name": "Tests: service \u00b7 regression \u00b7 dev",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--variable",
+        "BANK_URL:http://localhost:8765",
+        "--include",
+        "regression"
+      ]
+    },
+    {
+      "name": "Tests: service \u00b7 regression \u00b7 ci",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--variable",
+        "BANK_URL:http://localhost:8765",
+        "--include",
+        "regression",
+        "--exclude",
+        "wip",
+        "--outputdir",
+        "results/ci",
+        "--xunit",
+        "xunit.xml",
+        "--console",
+        "dotted"
+      ]
+    },
+    {
+      "name": "Tests: service \u00b7 all \u00b7 dev",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--variable",
+        "BANK_URL:http://localhost:8765"
+      ]
+    },
+    {
+      "name": "Tests: service \u00b7 all \u00b7 ci",
+      "type": "robotcode",
+      "request": "launch",
+      "target": "${workspaceFolder}/tests",
+      "args": [
+        "--variable",
+        "BANK_URL:http://localhost:8765",
+        "--exclude",
+        "wip",
+        "--outputdir",
+        "results/ci",
+        "--xunit",
+        "xunit.xml",
+        "--console",
+        "dotted"
+      ]
+    }
+  ]
+}

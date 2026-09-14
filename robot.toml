@@ -2,27 +2,3 @@
 paths = ["tests"]
 python-path = [".", "resources"]
 output-dir = "results"
-default-profiles = ["local"]
-
-[profiles.local]
-description = "Run against the in-memory bank; skip tests that need the web service"
-excludes = ["integration"]
-
-[profiles.service]
-description = "Run against the bank web service on localhost:8765"
-variables = { BANK_URL = "http://localhost:8765" }
-
-[profiles.smoke]
-description = "Only the quick smoke tests"
-includes = ["smoke"]
-
-[profiles.regression]
-description = "The regression suite"
-includes = ["regression"]
-
-[profiles.ci]
-description = "Settings for CI pipelines: separate output folder, xUnit report, compact console"
-excludes = ["wip"]
-output-dir = "results/ci"
-xunit = "xunit.xml"
-console = "dotted"

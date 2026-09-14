@@ -1,0 +1,23 @@
+# Our CI pipeline — every job repeats the flags from .vscode/launch.json and docs/running-tests.md.
+image: python:3.12
+
+before_script:
+  - pip install -r requirements.txt
+
+smoke:
+  script:
+    - robot --exclude integration --include smoke --exclude wip --outputdir results/ci --xunit xunit.xml --console dotted tests
+
+regression:
+  script:
+    - python -m bank.service --port 8765 &
+    - sleep 2
+    - robot --variable BANK_URL:http://localhost:8765 --include regression --exclude wip --outputdir results/ci --xunit xunit.xml --console dotted tests
+
+nightly:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  script:
+    - python -m bank.service --port 8765 &
+    - sleep 2
+    - robot --variable BANK_URL:http://localhost:8765 --exclude wip --outputdir results/ci --xunit xunit.xml --console dotted tests
