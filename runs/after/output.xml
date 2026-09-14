@@ -1,0 +1,3132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.12.6 on darwin)" generated="2026-09-14T19:35:34.070059" rpa="false" schemaversion="5">
+<suite id="s1" name="Tests" source="tests">
+<suite id="s1-s1" name="Accounts" source="tests/accounts">
+<suite id="s1-s1-s1" name="Basics" source="tests/accounts/basics.robot">
+<test id="s1-s1-s1-t1" name="New Account Starts Empty" line="10">
+<kw name="Open Account" owner="bank.BankLibrary">
+<arg>alice</arg>
+<doc>Opens an empty account for ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.086182" elapsed="0.000653"/>
+</kw>
+<kw name="Balance Should Be" owner="bank.BankLibrary">
+<arg>alice</arg>
+<arg>0</arg>
+<doc>Fails unless the balance of ``owner`` equals ``expected``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.086910" elapsed="0.000067"/>
+</kw>
+<tag>smoke</tag>
+<status status="PASS" start="2026-09-14T19:35:34.085778" elapsed="0.001247"/>
+</test>
+<test id="s1-s1-s1-t2" name="Deposit Increases Balance" line="14">
+<kw name="Open Account" owner="bank.BankLibrary">
+<arg>alice</arg>
+<doc>Opens an empty account for ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.087224" elapsed="0.000090"/>
+</kw>
+<kw name="Deposit" owner="bank.BankLibrary">
+<arg>alice</arg>
+<arg>100</arg>
+<doc>Adds ``amount`` to the account of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.087348" elapsed="0.000042"/>
+</kw>
+<kw name="Deposit" owner="bank.BankLibrary">
+<arg>alice</arg>
+<arg>50</arg>
+<doc>Adds ``amount`` to the account of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.087421" elapsed="0.000036"/>
+</kw>
+<kw name="Balance Should Be" owner="bank.BankLibrary">
+<arg>alice</arg>
+<arg>150</arg>
+<doc>Fails unless the balance of ``owner`` equals ``expected``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.087486" elapsed="0.000033"/>
+</kw>
+<tag>smoke</tag>
+<status status="PASS" start="2026-09-14T19:35:34.087102" elapsed="0.000453"/>
+</test>
+<test id="s1-s1-s1-t3" name="Transfer Moves Money Between Accounts" line="20">
+<kw name="Open Funded Account" owner="banking">
+<kw name="Open Account" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>type=${type}</arg>
+<doc>Opens an empty account for ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.087867" elapsed="0.000121"/>
+</kw>
+<kw name="Deposit" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Adds ``amount`` to the account of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.088019" elapsed="0.000054"/>
+</kw>
+<arg>alice</arg>
+<arg>100</arg>
+<doc>Opens an account for ``owner`` and deposits ``amount``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.087766" elapsed="0.000328"/>
+</kw>
+<kw name="Open Account" owner="bank.BankLibrary">
+<arg>bob</arg>
+<arg>type=savings</arg>
+<doc>Opens an empty account for ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.088124" elapsed="0.000047"/>
+</kw>
+<kw name="Transfer" owner="bank.BankLibrary">
+<arg>alice</arg>
+<arg>bob</arg>
+<arg>30</arg>
+<doc>Moves ``amount`` from ``source`` to ``target``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.088198" elapsed="0.000038"/>
+</kw>
+<kw name="Balance Should Be" owner="bank.BankLibrary">
+<arg>alice</arg>
+<arg>70</arg>
+<doc>Fails unless the balance of ``owner`` equals ``expected``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.088265" elapsed="0.000033"/>
+</kw>
+<kw name="Balance Should Be" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.088384" level="FAIL">Balance of 'bob' should be 30 but was 29.</msg>
+<arg>bob</arg>
+<arg>30</arg>
+<doc>Fails unless the balance of ``owner`` equals ``expected``.</doc>
+<status status="FAIL" start="2026-09-14T19:35:34.088325" elapsed="0.000516">Balance of 'bob' should be 30 but was 29.</status>
+</kw>
+<tag>smoke</tag>
+<status status="FAIL" start="2026-09-14T19:35:34.087612" elapsed="0.001343">Balance of 'bob' should be 30 but was 29.</status>
+</test>
+<doc>Everyday banking: opening accounts, deposits and transfers.</doc>
+<status status="FAIL" start="2026-09-14T19:35:34.081879" elapsed="0.007273"/>
+</suite>
+<suite id="s1-s1-s2" name="Overdraft" source="tests/accounts/overdraft.robot">
+<test id="s1-s1-s2-t1" name="Checking Account Can Be Overdrawn" line="10">
+<kw name="Open Funded Account" owner="banking">
+<kw name="Open Account" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>type=${type}</arg>
+<doc>Opens an empty account for ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.090485" elapsed="0.000162"/>
+</kw>
+<kw name="Deposit" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Adds ``amount`` to the account of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.090692" elapsed="0.000068"/>
+</kw>
+<arg>alice</arg>
+<arg>20</arg>
+<doc>Opens an account for ``owner`` and deposits ``amount``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.090347" elapsed="0.000438"/>
+</kw>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.091135" level="INFO">${balance} = 20</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.090959" elapsed="0.000193"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.091243" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.091187" elapsed="0.000065"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.091494" level="INFO">${available} = 120</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.091290" elapsed="0.000214"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.091629" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.091548" elapsed="0.000101"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.091533" elapsed="0.000132"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.091700" elapsed="0.000060"/>
+</kw>
+<arg>alice</arg>
+<arg>50</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.090873" elapsed="0.000909"/>
+</kw>
+<kw name="Balance Should Be" owner="bank.BankLibrary">
+<arg>alice</arg>
+<arg>-30</arg>
+<doc>Fails unless the balance of ``owner`` equals ``expected``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.091813" elapsed="0.000037"/>
+</kw>
+<tag>regression</tag>
+<status status="PASS" start="2026-09-14T19:35:34.090160" elapsed="0.001728"/>
+</test>
+<test id="s1-s1-s2-t2" name="Withdraw Exactly Up To The Limit" line="15">
+<kw name="Open Funded Account" owner="banking">
+<kw name="Open Account" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>type=${type}</arg>
+<doc>Opens an empty account for ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.092185" elapsed="0.000122"/>
+</kw>
+<kw name="Deposit" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Adds ``amount`` to the account of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.092338" elapsed="0.000055"/>
+</kw>
+<arg>alice</arg>
+<arg>50</arg>
+<doc>Opens an account for ``owner`` and deposits ``amount``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.092092" elapsed="0.000453"/>
+</kw>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.092758" level="INFO">${balance} = 50</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.092704" elapsed="0.000064"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.092846" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.092798" elapsed="0.000056"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.093023" level="INFO">${available} = 150</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.092886" elapsed="0.000146"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.093130" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.093064" elapsed="0.000107"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.093054" elapsed="0.000136"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.093235" elapsed="0.000082"/>
+</kw>
+<arg>alice</arg>
+<arg>150</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.092621" elapsed="0.000720"/>
+</kw>
+<kw name="Balance Should Be" owner="bank.BankLibrary">
+<arg>alice</arg>
+<arg>-100</arg>
+<doc>Fails unless the balance of ``owner`` equals ``expected``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.093372" elapsed="0.000036"/>
+</kw>
+<tag>regression</tag>
+<status status="PASS" start="2026-09-14T19:35:34.091951" elapsed="0.001493"/>
+</test>
+<test id="s1-s1-s2-t3" name="Checking Account Cannot Exceed The Limit" line="20">
+<kw name="Open Funded Account" owner="banking">
+<kw name="Open Account" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>type=${type}</arg>
+<doc>Opens an empty account for ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.093733" elapsed="0.000110"/>
+</kw>
+<kw name="Deposit" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Adds ``amount`` to the account of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.093872" elapsed="0.000050"/>
+</kw>
+<arg>alice</arg>
+<arg>50</arg>
+<doc>Opens an account for ``owner`` and deposits ``amount``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.093645" elapsed="0.000295"/>
+</kw>
+<kw name="Run Keyword And Expect Error" owner="BuiltIn">
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.094266" level="INFO">${balance} = 50</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.094215" elapsed="0.000060"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.094351" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.094306" elapsed="0.000052"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.094511" level="INFO">${available} = 150</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.094388" elapsed="0.000132"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.094718" level="FAIL">Withdrawal refused for alice: overdraft limit exceeded.</msg>
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="FAIL" start="2026-09-14T19:35:34.094610" elapsed="0.000137">Withdrawal refused for alice: overdraft limit exceeded.</status>
+</kw>
+<status status="FAIL" start="2026-09-14T19:35:34.094547" elapsed="0.000225">Withdrawal refused for alice: overdraft limit exceeded.</status>
+</branch>
+<status status="FAIL" start="2026-09-14T19:35:34.094538" elapsed="0.000247">Withdrawal refused for alice: overdraft limit exceeded.</status>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.094816" elapsed="0.000007"/>
+</kw>
+<arg>alice</arg>
+<arg>151</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="FAIL" start="2026-09-14T19:35:34.094135" elapsed="0.000723">Withdrawal refused for alice: overdraft limit exceeded.</status>
+</kw>
+<arg>Withdrawal refused for alice*</arg>
+<arg>Withdraw Within Limit</arg>
+<arg>alice</arg>
+<arg>151</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.093977" elapsed="0.000979"/>
+</kw>
+<kw name="Balance Should Be" owner="bank.BankLibrary">
+<arg>alice</arg>
+<arg>50</arg>
+<doc>Fails unless the balance of ``owner`` equals ``expected``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.094989" elapsed="0.000039"/>
+</kw>
+<tag>regression</tag>
+<status status="PASS" start="2026-09-14T19:35:34.093508" elapsed="0.001555"/>
+</test>
+<test id="s1-s1-s2-t4" name="Savings Account Cannot Be Overdrawn" line="26">
+<kw name="Open Account" owner="bank.BankLibrary">
+<arg>carol</arg>
+<arg>type=savings</arg>
+<doc>Opens an empty account for ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.095220" elapsed="0.000193"/>
+</kw>
+<kw name="Withdrawal Should Fail" owner="bank.BankLibrary">
+<arg>carol</arg>
+<arg>1</arg>
+<doc>Fails if withdrawing ``amount`` from ``owner`` succeeds.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.095444" elapsed="0.000041"/>
+</kw>
+<tag>regression</tag>
+<tag>smoke</tag>
+<status status="PASS" start="2026-09-14T19:35:34.095118" elapsed="0.000400"/>
+</test>
+<test id="s1-s1-s2-t5" name="Many Small Withdrawals" line="31">
+<kw name="Open Funded Account" owner="banking">
+<kw name="Open Account" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>type=${type}</arg>
+<doc>Opens an empty account for ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.095769" elapsed="0.000103"/>
+</kw>
+<kw name="Deposit" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Adds ``amount`` to the account of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.095901" elapsed="0.000048"/>
+</kw>
+<arg>dave</arg>
+<arg>50</arg>
+<doc>Opens an account for ``owner`` and deposits ``amount``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.095684" elapsed="0.000283"/>
+</kw>
+<for flavor="IN RANGE">
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.096237" level="INFO">${balance} = 50</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.096190" elapsed="0.000056"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.096319" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.096275" elapsed="0.000098"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.096519" level="INFO">${available} = 150</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.096405" elapsed="0.000123"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.096612" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.096553" elapsed="0.000076"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.096546" elapsed="0.000091"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.096661" elapsed="0.000052"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.096111" elapsed="0.000621"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.109398" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.096760" elapsed="0.012694"/>
+</kw>
+<var name="${_}">0</var>
+<status status="PASS" start="2026-09-14T19:35:34.096053" elapsed="0.013429"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.109888" level="INFO">${balance} = 49</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.109804" elapsed="0.000094"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.109993" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.109936" elapsed="0.000066"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.110209" level="INFO">${available} = 149</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.110040" elapsed="0.000179"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.110332" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.110257" elapsed="0.000099"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.110244" elapsed="0.000122"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.110395" elapsed="0.000069"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.109670" elapsed="0.000818"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.120971" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.110525" elapsed="0.010504"/>
+</kw>
+<var name="${_}">1</var>
+<status status="PASS" start="2026-09-14T19:35:34.109561" elapsed="0.011495"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.121458" level="INFO">${balance} = 48</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.121375" elapsed="0.000094"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.121563" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.121509" elapsed="0.000062"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.121782" level="INFO">${available} = 148</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.121606" elapsed="0.000185"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.121893" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.121823" elapsed="0.000089"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.121813" elapsed="0.000110"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.121951" elapsed="0.000069"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.121237" elapsed="0.000807"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.134704" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.122078" elapsed="0.012670"/>
+</kw>
+<var name="${_}">2</var>
+<status status="PASS" start="2026-09-14T19:35:34.121127" elapsed="0.013641"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.135129" level="INFO">${balance} = 47</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.135054" elapsed="0.000085"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.135343" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.135171" elapsed="0.000181"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.135545" level="INFO">${available} = 147</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.135388" elapsed="0.000167"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.135656" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.135586" elapsed="0.000089"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.135576" elapsed="0.000110"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.135765" elapsed="0.000063"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.134936" elapsed="0.000915"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.147610" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.135883" elapsed="0.011796"/>
+</kw>
+<var name="${_}">3</var>
+<status status="PASS" start="2026-09-14T19:35:34.134835" elapsed="0.012873"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.148243" level="INFO">${balance} = 46</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.148167" elapsed="0.000090"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.148346" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.148294" elapsed="0.000061"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.148549" level="INFO">${available} = 146</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.148389" elapsed="0.000169"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.148656" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.148589" elapsed="0.000086"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.148580" elapsed="0.000105"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.148711" elapsed="0.000060"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.148037" elapsed="0.000757"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.161464" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.148825" elapsed="0.012765"/>
+</kw>
+<var name="${_}">4</var>
+<status status="PASS" start="2026-09-14T19:35:34.147920" elapsed="0.013704"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.162119" level="INFO">${balance} = 45</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.162035" elapsed="0.000096"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.162375" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.162171" elapsed="0.000224"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.162644" level="INFO">${available} = 145</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.162461" elapsed="0.000194"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.162769" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.162692" elapsed="0.000098"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.162681" elapsed="0.000120"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.162829" elapsed="0.000068"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.161880" elapsed="0.001043"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.175597" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.162957" elapsed="0.012709"/>
+</kw>
+<var name="${_}">5</var>
+<status status="PASS" start="2026-09-14T19:35:34.161715" elapsed="0.013980"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.176120" level="INFO">${balance} = 44</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.176034" elapsed="0.000098"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.176232" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.176171" elapsed="0.000070"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.176489" level="INFO">${available} = 144</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.176277" elapsed="0.000232"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.176664" elapsed="0.000009"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.176559" elapsed="0.000129"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.176546" elapsed="0.000157"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.176735" elapsed="0.000089"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.175889" elapsed="0.000961"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.187721" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.176888" elapsed="0.010873"/>
+</kw>
+<var name="${_}">6</var>
+<status status="PASS" start="2026-09-14T19:35:34.175776" elapsed="0.012003"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.188125" level="INFO">${balance} = 43</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.188054" elapsed="0.000134"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.188279" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.188225" elapsed="0.000063"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.188476" level="INFO">${available} = 143</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.188322" elapsed="0.000164"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.188585" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.188517" elapsed="0.000087"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.188507" elapsed="0.000106"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.188640" elapsed="0.000062"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.187927" elapsed="0.000797"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.200055" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.188760" elapsed="0.011337"/>
+</kw>
+<var name="${_}">7</var>
+<status status="PASS" start="2026-09-14T19:35:34.187836" elapsed="0.012282"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.200532" level="INFO">${balance} = 42</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.200469" elapsed="0.000073"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.200622" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.200574" elapsed="0.000056"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.200797" level="INFO">${available} = 142</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.200661" elapsed="0.000145"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.200895" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.200833" elapsed="0.000080"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.200825" elapsed="0.000097"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.200946" elapsed="0.000056"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.200357" elapsed="0.000665"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.211409" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.201053" elapsed="0.010424"/>
+</kw>
+<var name="${_}">8</var>
+<status status="PASS" start="2026-09-14T19:35:34.200178" elapsed="0.011328"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.211940" level="INFO">${balance} = 41</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.211852" elapsed="0.000099"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.212055" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.211990" elapsed="0.000073"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.212285" level="INFO">${available} = 141</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.212104" elapsed="0.000191"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.212409" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.212331" elapsed="0.000098"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.212318" elapsed="0.000122"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.212467" elapsed="0.000069"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.211706" elapsed="0.000855"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.225143" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.212597" elapsed="0.012597"/>
+</kw>
+<var name="${_}">9</var>
+<status status="PASS" start="2026-09-14T19:35:34.211592" elapsed="0.013626"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.225943" level="INFO">${balance} = 40</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.225848" elapsed="0.000112"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.226064" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.226006" elapsed="0.000067"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.226309" level="INFO">${available} = 140</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.226109" elapsed="0.000210"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.226434" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.226358" elapsed="0.000149"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.226345" elapsed="0.000174"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.226549" elapsed="0.000066"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.225659" elapsed="0.000979"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.239066" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.226673" elapsed="0.012445"/>
+</kw>
+<var name="${_}">10</var>
+<status status="PASS" start="2026-09-14T19:35:34.225510" elapsed="0.013630"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.239506" level="INFO">${balance} = 39</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.239436" elapsed="0.000081"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.239606" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.239553" elapsed="0.000063"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.239812" level="INFO">${available} = 139</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.239651" elapsed="0.000171"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.239943" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.239854" elapsed="0.000108"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.239844" elapsed="0.000129"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.240001" elapsed="0.000064"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.239309" elapsed="0.000780"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.252094" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.240122" elapsed="0.012036"/>
+</kw>
+<var name="${_}">11</var>
+<status status="PASS" start="2026-09-14T19:35:34.239209" elapsed="0.012976"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.252652" level="INFO">${balance} = 38</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.252538" elapsed="0.000128"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.252777" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.252711" elapsed="0.000077"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.253102" level="INFO">${available} = 138</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.252827" elapsed="0.000285"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.253219" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.253147" elapsed="0.000092"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.253136" elapsed="0.000113"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.253275" elapsed="0.000063"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.252364" elapsed="0.000996"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.266017" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.253391" elapsed="0.012667"/>
+</kw>
+<var name="${_}">12</var>
+<status status="PASS" start="2026-09-14T19:35:34.252258" elapsed="0.013818"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.266390" level="INFO">${balance} = 37</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.266329" elapsed="0.000070"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.266479" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.266431" elapsed="0.000056"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.266658" level="INFO">${available} = 137</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.266519" elapsed="0.000147"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.266866" elapsed="0.000027"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.266695" elapsed="0.000233"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.266686" elapsed="0.000283"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.267023" elapsed="0.000099"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.266219" elapsed="0.000931"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.279073" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.267191" elapsed="0.011934"/>
+</kw>
+<var name="${_}">13</var>
+<status status="PASS" start="2026-09-14T19:35:34.266133" elapsed="0.013064"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.279549" level="INFO">${balance} = 36</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.279474" elapsed="0.000085"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.279651" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.279595" elapsed="0.000065"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.279858" level="INFO">${available} = 136</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.279696" elapsed="0.000175"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.279973" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.279903" elapsed="0.000092"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.279895" elapsed="0.000109"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.280031" elapsed="0.000063"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.279355" elapsed="0.000762"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.292166" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.280150" elapsed="0.012077"/>
+</kw>
+<var name="${_}">14</var>
+<status status="PASS" start="2026-09-14T19:35:34.279263" elapsed="0.012992"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.292637" level="INFO">${balance} = 35</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.292565" elapsed="0.000082"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.292731" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.292680" elapsed="0.000059"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.292937" level="INFO">${available} = 135</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.292773" elapsed="0.000174"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.293046" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.292978" elapsed="0.000087"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.292968" elapsed="0.000107"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.293101" elapsed="0.000061"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.292434" elapsed="0.000750"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.305839" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.293214" elapsed="0.012676"/>
+</kw>
+<var name="${_}">15</var>
+<status status="PASS" start="2026-09-14T19:35:34.292330" elapsed="0.013583"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.306262" level="INFO">${balance} = 34</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.306193" elapsed="0.000079"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.306363" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.306311" elapsed="0.000061"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.306567" level="INFO">${available} = 134</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.306406" elapsed="0.000171"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.306677" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.306607" elapsed="0.000089"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.306598" elapsed="0.000113"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.306739" elapsed="0.000062"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.306072" elapsed="0.000751"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.319488" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.306855" elapsed="0.012684"/>
+</kw>
+<var name="${_}">16</var>
+<status status="PASS" start="2026-09-14T19:35:34.305976" elapsed="0.013587"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.320018" level="INFO">${balance} = 33</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.319949" elapsed="0.000079"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.320112" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.320060" elapsed="0.000060"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.320303" level="INFO">${available} = 133</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.320152" elapsed="0.000159"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.320461" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.320396" elapsed="0.000083"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.320387" elapsed="0.000101"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.320512" elapsed="0.000057"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.319736" elapsed="0.000854"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.333305" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.320619" elapsed="0.012778"/>
+</kw>
+<var name="${_}">17</var>
+<status status="PASS" start="2026-09-14T19:35:34.319630" elapsed="0.013792"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.333758" level="INFO">${balance} = 32</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.333692" elapsed="0.000077"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.333855" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.333806" elapsed="0.000057"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.334047" level="INFO">${available} = 132</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.333895" elapsed="0.000161"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.334151" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.334086" elapsed="0.000083"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.334077" elapsed="0.000101"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.334204" elapsed="0.000057"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.333573" elapsed="0.000709"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.346959" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.334312" elapsed="0.012719"/>
+</kw>
+<var name="${_}">18</var>
+<status status="PASS" start="2026-09-14T19:35:34.333483" elapsed="0.013576"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.347492" level="INFO">${balance} = 31</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.347403" elapsed="0.000104"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.347603" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.347546" elapsed="0.000066"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.347843" level="INFO">${available} = 131</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.347650" elapsed="0.000204"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.347976" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.347892" elapsed="0.000105"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.347879" elapsed="0.000128"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.348036" elapsed="0.000067"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.347250" elapsed="0.000879"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.358593" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.348163" elapsed="0.010515"/>
+</kw>
+<var name="${_}">19</var>
+<status status="PASS" start="2026-09-14T19:35:34.347138" elapsed="0.011578"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.359158" level="INFO">${balance} = 30</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.359080" elapsed="0.000089"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.359256" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.359204" elapsed="0.000060"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.359471" level="INFO">${available} = 130</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.359298" elapsed="0.000182"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.359578" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.359511" elapsed="0.000086"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.359501" elapsed="0.000106"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.359633" elapsed="0.000061"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.358936" elapsed="0.000780"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.375216" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.363360" elapsed="0.011920"/>
+</kw>
+<var name="${_}">20</var>
+<status status="PASS" start="2026-09-14T19:35:34.358815" elapsed="0.016489"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.375749" level="INFO">${balance} = 29</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.375591" elapsed="0.000180"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.375937" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.375855" elapsed="0.000092"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.376175" level="INFO">${available} = 129</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.375991" elapsed="0.000194"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.376311" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.376230" elapsed="0.000103"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.376217" elapsed="0.000127"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.376373" elapsed="0.000175"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.375464" elapsed="0.001110"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.389243" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.376609" elapsed="0.012686"/>
+</kw>
+<var name="${_}">21</var>
+<status status="PASS" start="2026-09-14T19:35:34.375370" elapsed="0.013950"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.389685" level="INFO">${balance} = 28</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.389612" elapsed="0.000084"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.389786" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.389732" elapsed="0.000063"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.389998" level="INFO">${available} = 128</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.389829" elapsed="0.000179"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.390113" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.390040" elapsed="0.000092"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.390031" elapsed="0.000111"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.390169" elapsed="0.000062"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.389481" elapsed="0.000772"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.402912" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.390286" elapsed="0.012680"/>
+</kw>
+<var name="${_}">22</var>
+<status status="PASS" start="2026-09-14T19:35:34.389385" elapsed="0.013603"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.403344" level="INFO">${balance} = 27</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.403274" elapsed="0.000080"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.403443" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.403389" elapsed="0.000062"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.403651" level="INFO">${available} = 127</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.403489" elapsed="0.000171"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.403763" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.403692" elapsed="0.000090"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.403682" elapsed="0.000111"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.403821" elapsed="0.000065"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.403153" elapsed="0.000756"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.416579" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.403944" elapsed="0.012691"/>
+</kw>
+<var name="${_}">23</var>
+<status status="PASS" start="2026-09-14T19:35:34.403052" elapsed="0.013605"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.417008" level="INFO">${balance} = 26</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.416945" elapsed="0.000072"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.417093" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.417047" elapsed="0.000053"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.417350" level="INFO">${available} = 126</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.417193" elapsed="0.000167"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.417453" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.417391" elapsed="0.000080"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.417381" elapsed="0.000099"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.417506" elapsed="0.000058"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.416827" elapsed="0.000758"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.430265" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.417617" elapsed="0.012702"/>
+</kw>
+<var name="${_}">24</var>
+<status status="PASS" start="2026-09-14T19:35:34.416721" elapsed="0.013622"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.430686" level="INFO">${balance} = 25</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.430618" elapsed="0.000078"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.430779" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.430730" elapsed="0.000058"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.430977" level="INFO">${available} = 125</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.430821" elapsed="0.000166"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.431084" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.431017" elapsed="0.000086"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.431008" elapsed="0.000105"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.431139" elapsed="0.000060"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.430498" elapsed="0.000723"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.443890" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.431254" elapsed="0.012699"/>
+</kw>
+<var name="${_}">25</var>
+<status status="PASS" start="2026-09-14T19:35:34.430404" elapsed="0.013575"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.444493" level="INFO">${balance} = 24</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.444303" elapsed="0.000201"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.444593" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.444541" elapsed="0.000061"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.444817" level="INFO">${available} = 124</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.444642" elapsed="0.000185"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.444932" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.444860" elapsed="0.000091"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.444850" elapsed="0.000112"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.444988" elapsed="0.000064"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.444162" elapsed="0.000913"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.457123" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.445107" elapsed="0.012068"/>
+</kw>
+<var name="${_}">26</var>
+<status status="PASS" start="2026-09-14T19:35:34.444051" elapsed="0.013143"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.457582" level="INFO">${balance} = 23</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.457505" elapsed="0.000090"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.457690" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.457634" elapsed="0.000065"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.457896" level="INFO">${available} = 123</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.457735" elapsed="0.000171"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.458013" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.457939" elapsed="0.000094"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.457929" elapsed="0.000115"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.458071" elapsed="0.000064"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.457368" elapsed="0.000849"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.470818" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.458252" elapsed="0.012613"/>
+</kw>
+<var name="${_}">27</var>
+<status status="PASS" start="2026-09-14T19:35:34.457252" elapsed="0.013635"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.471293" level="INFO">${balance} = 22</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.471218" elapsed="0.000088"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.471406" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.471346" elapsed="0.000071"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.471638" level="INFO">${available} = 122</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.471453" elapsed="0.000195"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.471756" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.471682" elapsed="0.000094"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.471673" elapsed="0.000113"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.471814" elapsed="0.000064"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.471073" elapsed="0.000827"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.484561" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.471934" elapsed="0.012675"/>
+</kw>
+<var name="${_}">28</var>
+<status status="PASS" start="2026-09-14T19:35:34.470950" elapsed="0.013677"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.485168" level="INFO">${balance} = 21</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.485088" elapsed="0.000096"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.485297" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.485234" elapsed="0.000074"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.485513" level="INFO">${available} = 121</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.485345" elapsed="0.000179"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.485631" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.485557" elapsed="0.000095"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.485547" elapsed="0.000115"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.485691" elapsed="0.000066"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.484927" elapsed="0.000854"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.498469" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.485817" elapsed="0.012716"/>
+</kw>
+<var name="${_}">29</var>
+<status status="PASS" start="2026-09-14T19:35:34.484689" elapsed="0.013876"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.499003" level="INFO">${balance} = 20</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.498922" elapsed="0.000091"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.499098" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.499047" elapsed="0.000059"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.499314" level="INFO">${available} = 120</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.499143" elapsed="0.000179"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.499429" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.499357" elapsed="0.000090"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.499347" elapsed="0.000114"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.499491" elapsed="0.000063"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.498764" elapsed="0.000811"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.512233" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.499606" elapsed="0.012666"/>
+</kw>
+<var name="${_}">30</var>
+<status status="PASS" start="2026-09-14T19:35:34.498644" elapsed="0.013643"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.512676" level="INFO">${balance} = 19</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.512619" elapsed="0.000066"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.512821" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.512771" elapsed="0.000058"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.512982" level="INFO">${available} = 119</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.512861" elapsed="0.000130"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.513081" elapsed="0.000008"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.513019" elapsed="0.000081"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.513012" elapsed="0.000099"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.513137" elapsed="0.000057"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.512521" elapsed="0.000694"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.525186" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.513247" elapsed="0.011970"/>
+</kw>
+<var name="${_}">31</var>
+<status status="PASS" start="2026-09-14T19:35:34.512329" elapsed="0.012906"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.525538" level="INFO">${balance} = 18</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.525470" elapsed="0.000078"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.525639" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.525583" elapsed="0.000065"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.525834" level="INFO">${available} = 118</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.525685" elapsed="0.000159"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.525942" elapsed="0.000007"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.525873" elapsed="0.000088"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.525865" elapsed="0.000106"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.526000" elapsed="0.000061"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.525361" elapsed="0.000722"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.537238" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.526116" elapsed="0.011173"/>
+</kw>
+<var name="${_}">32</var>
+<status status="PASS" start="2026-09-14T19:35:34.525284" elapsed="0.012028"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.537698" level="INFO">${balance} = 17</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.537618" elapsed="0.000092"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.537815" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.537754" elapsed="0.000071"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.538202" level="INFO">${available} = 117</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.537875" elapsed="0.000347"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.538384" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.538277" elapsed="0.000132"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.538264" elapsed="0.000158"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.538460" elapsed="0.000081"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.537481" elapsed="0.001088"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.551265" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.538609" elapsed="0.012714"/>
+</kw>
+<var name="${_}">33</var>
+<status status="PASS" start="2026-09-14T19:35:34.537377" elapsed="0.013972"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.551757" level="INFO">${balance} = 16</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.551679" elapsed="0.000090"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.551876" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.551808" elapsed="0.000078"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.552139" level="INFO">${available} = 116</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.551929" elapsed="0.000221"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.552280" elapsed="0.000009"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.552190" elapsed="0.000114"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.552179" elapsed="0.000190"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.552406" elapsed="0.000081"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.551545" elapsed="0.000971"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.565197" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.552558" elapsed="0.012666"/>
+</kw>
+<var name="${_}">34</var>
+<status status="PASS" start="2026-09-14T19:35:34.551420" elapsed="0.013821"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.565638" level="INFO">${balance} = 15</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.565556" elapsed="0.000097"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.565767" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.565700" elapsed="0.000078"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.566117" level="INFO">${available} = 115</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.565822" elapsed="0.000307"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.566261" elapsed="0.000010"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.566169" elapsed="0.000121"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.566157" elapsed="0.000145"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.566341" elapsed="0.000080"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.565414" elapsed="0.001037"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.576851" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.566494" elapsed="0.010401"/>
+</kw>
+<var name="${_}">35</var>
+<status status="PASS" start="2026-09-14T19:35:34.565304" elapsed="0.011615"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.577319" level="INFO">${balance} = 14</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.577234" elapsed="0.000099"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.577448" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.577379" elapsed="0.000082"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.577694" level="INFO">${available} = 114</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.577506" elapsed="0.000200"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.577834" elapsed="0.000010"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.577746" elapsed="0.000114"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.577734" elapsed="0.000139"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.577909" elapsed="0.000083"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.577090" elapsed="0.000940"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.590737" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.578075" elapsed="0.012712"/>
+</kw>
+<var name="${_}">36</var>
+<status status="PASS" start="2026-09-14T19:35:34.576982" elapsed="0.013826"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.591170" level="INFO">${balance} = 13</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.591097" elapsed="0.000083"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.591263" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.591212" elapsed="0.000059"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.591456" level="INFO">${available} = 113</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.591301" elapsed="0.000163"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.591567" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.591493" elapsed="0.000092"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.591484" elapsed="0.000111"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.591621" elapsed="0.000060"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.590988" elapsed="0.000717"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.604345" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.591738" elapsed="0.012627"/>
+</kw>
+<var name="${_}">37</var>
+<status status="PASS" start="2026-09-14T19:35:34.590869" elapsed="0.013508"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.604695" level="INFO">${balance} = 12</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.604580" elapsed="0.000123"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.604777" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.604732" elapsed="0.000052"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.604924" level="INFO">${available} = 112</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.604814" elapsed="0.000119"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.605016" elapsed="0.000006"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.604957" elapsed="0.000076"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.604950" elapsed="0.000092"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.605066" elapsed="0.000053"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.604482" elapsed="0.000659"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.617769" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.605171" elapsed="0.012627"/>
+</kw>
+<var name="${_}">38</var>
+<status status="PASS" start="2026-09-14T19:35:34.604416" elapsed="0.013401"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.618171" level="INFO">${balance} = 11</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.618093" elapsed="0.000092"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.618309" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.618231" elapsed="0.000090"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.618545" level="INFO">${available} = 111</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.618370" elapsed="0.000189"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.618686" elapsed="0.000010"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.618596" elapsed="0.000118"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.618586" elapsed="0.000141"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.618767" elapsed="0.000084"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.617963" elapsed="0.000920"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.631572" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.618930" elapsed="0.012682"/>
+</kw>
+<var name="${_}">39</var>
+<status status="PASS" start="2026-09-14T19:35:34.617871" elapsed="0.013762"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.632164" level="INFO">${balance} = 10</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.632080" elapsed="0.000097"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.632302" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.632224" elapsed="0.000091"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.632551" level="INFO">${available} = 110</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.632364" elapsed="0.000201"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.632704" elapsed="0.000010"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.632605" elapsed="0.000126"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.632594" elapsed="0.000151"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.632785" elapsed="0.000090"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.631805" elapsed="0.001105"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.645604" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.632957" elapsed="0.012684"/>
+</kw>
+<var name="${_}">40</var>
+<status status="PASS" start="2026-09-14T19:35:34.631696" elapsed="0.013967"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.646081" level="INFO">${balance} = 9</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.645991" elapsed="0.000105"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.646227" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.646147" elapsed="0.000094"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.646494" level="INFO">${available} = 109</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.646296" elapsed="0.000213"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.646657" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.646553" elapsed="0.000213"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.646541" elapsed="0.000241"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.646826" elapsed="0.000097"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.645841" elapsed="0.001119"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.659669" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.647014" elapsed="0.012687"/>
+</kw>
+<var name="${_}">41</var>
+<status status="PASS" start="2026-09-14T19:35:34.645730" elapsed="0.013992"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.660121" level="INFO">${balance} = 8</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.660031" elapsed="0.000106"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.660272" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.660190" elapsed="0.000096"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.660533" level="INFO">${available} = 108</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.660340" elapsed="0.000209"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.660692" elapsed="0.000017"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.660592" elapsed="0.000137"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.660580" elapsed="0.000165"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.660789" elapsed="0.000097"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.659887" elapsed="0.001034"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.673630" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.660974" elapsed="0.012692"/>
+</kw>
+<var name="${_}">42</var>
+<status status="PASS" start="2026-09-14T19:35:34.659783" elapsed="0.013907"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.674138" level="INFO">${balance} = 7</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.674038" elapsed="0.000118"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.674312" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.674213" elapsed="0.000114"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.674609" level="INFO">${available} = 107</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.674390" elapsed="0.000236"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.674786" elapsed="0.000014"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.674673" elapsed="0.000149"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.674661" elapsed="0.000179"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.674889" elapsed="0.000109"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.673875" elapsed="0.001163"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.687781" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.675100" elapsed="0.012728"/>
+</kw>
+<var name="${_}">43</var>
+<status status="PASS" start="2026-09-14T19:35:34.673759" elapsed="0.014095"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.688366" level="INFO">${balance} = 6</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.688237" elapsed="0.000147"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.688625" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.688445" elapsed="0.000212"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.689121" level="INFO">${available} = 106</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.688760" elapsed="0.000383"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.689362" elapsed="0.000017"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.689211" elapsed="0.000195"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.689192" elapsed="0.000235"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.689487" elapsed="0.000967"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.688058" elapsed="0.002437"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.703229" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.690550" elapsed="0.012728"/>
+</kw>
+<var name="${_}">44</var>
+<status status="PASS" start="2026-09-14T19:35:34.687931" elapsed="0.015473"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.703882" level="INFO">${balance} = 5</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.703787" elapsed="0.000110"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.704027" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.703947" elapsed="0.000094"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.704319" level="INFO">${available} = 105</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.704095" elapsed="0.000240"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.704488" elapsed="0.000011"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.704384" elapsed="0.000135"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.704369" elapsed="0.000166"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.704579" elapsed="0.000098"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.703625" elapsed="0.001088"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.717445" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.704766" elapsed="0.012746"/>
+</kw>
+<var name="${_}">45</var>
+<status status="PASS" start="2026-09-14T19:35:34.703493" elapsed="0.014049"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.718037" level="INFO">${balance} = 4</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.717936" elapsed="0.000117"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.718187" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.718107" elapsed="0.000094"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.718488" level="INFO">${available} = 104</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.718257" elapsed="0.000246"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.718659" elapsed="0.000013"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.718551" elapsed="0.000141"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.718536" elapsed="0.000173"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.718752" elapsed="0.000100"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.717764" elapsed="0.001124"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.731632" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.718942" elapsed="0.012769"/>
+</kw>
+<var name="${_}">46</var>
+<status status="PASS" start="2026-09-14T19:35:34.717630" elapsed="0.014123"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.732425" level="INFO">${balance} = 3</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.732313" elapsed="0.000132"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.732609" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.732507" elapsed="0.000120"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.732925" level="INFO">${available} = 103</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.732690" elapsed="0.000250"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.733097" elapsed="0.000012"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.732989" elapsed="0.000140"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.732975" elapsed="0.000170"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.733189" elapsed="0.000099"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.732102" elapsed="0.001224"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.746075" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.733381" elapsed="0.012774"/>
+</kw>
+<var name="${_}">47</var>
+<status status="PASS" start="2026-09-14T19:35:34.731862" elapsed="0.014335"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.746817" level="INFO">${balance} = 2</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.746690" elapsed="0.000145"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.746986" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.746896" elapsed="0.000104"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.747355" level="INFO">${available} = 102</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.747065" elapsed="0.000306"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.747621" elapsed="0.000013"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.747499" elapsed="0.000156"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.747479" elapsed="0.000194"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.747720" elapsed="0.000109"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.746466" elapsed="0.001400"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.759821" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.747924" elapsed="0.011952"/>
+</kw>
+<var name="${_}">48</var>
+<status status="PASS" start="2026-09-14T19:35:34.746301" elapsed="0.013609"/>
+</iter>
+<iter>
+<kw name="Withdraw Within Limit" owner="banking">
+<kw name="Get Balance" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.760694" level="INFO">${balance} = 1</msg>
+<var>${balance}</var>
+<arg>${owner}</arg>
+<doc>Returns the current balance of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.760370" elapsed="0.000346"/>
+</kw>
+<kw name="Get Limit" owner="bank.BankLibrary">
+<msg time="2026-09-14T19:35:34.760888" level="INFO">${limit} = 100</msg>
+<var>${limit}</var>
+<arg>${owner}</arg>
+<doc>Returns the overdraft limit of ``owner`` (always 0 for savings accounts).</doc>
+<status status="PASS" start="2026-09-14T19:35:34.760786" elapsed="0.000119"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.761273" level="INFO">${available} = 101</msg>
+<var>${available}</var>
+<arg>${balance} + ${limit}</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.760985" elapsed="0.000306"/>
+</kw>
+<if>
+<branch type="IF" condition="${amount} &gt; ${available}">
+<kw name="Fail" owner="BuiltIn">
+<arg>Withdrawal refused for ${owner}: overdraft limit exceeded.</arg>
+<doc>Fails the test with the given message and optionally alters its tags.</doc>
+<status status="NOT RUN" start="2026-09-14T19:35:34.761484" elapsed="0.000014"/>
+</kw>
+<status status="NOT RUN" start="2026-09-14T19:35:34.761348" elapsed="0.000181"/>
+</branch>
+<status status="PASS" start="2026-09-14T19:35:34.761331" elapsed="0.000218"/>
+</if>
+<kw name="Withdraw" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Takes ``amount`` from the account of ``owner``. Fails if the overdraft limit would be exceeded.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.761602" elapsed="0.000127"/>
+</kw>
+<arg>dave</arg>
+<arg>1</arg>
+<doc>Withdraws ``amount`` unless it exceeds the balance plus the overdraft limit.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.760158" elapsed="0.001615"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.774549" level="INFO">Slept 10 milliseconds.</msg>
+<arg>10ms</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.761835" elapsed="0.012770"/>
+</kw>
+<var name="${_}">49</var>
+<status status="PASS" start="2026-09-14T19:35:34.760003" elapsed="0.014635"/>
+</iter>
+<var>${_}</var>
+<value>50</value>
+<status status="PASS" start="2026-09-14T19:35:34.095990" elapsed="0.678678"/>
+</for>
+<kw name="Balance Should Be" owner="bank.BankLibrary">
+<arg>dave</arg>
+<arg>0</arg>
+<doc>Fails unless the balance of ``owner`` equals ``expected``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.774757" elapsed="0.000100"/>
+</kw>
+<tag>regression</tag>
+<tag>slow</tag>
+<status status="PASS" start="2026-09-14T19:35:34.095573" elapsed="0.679384"/>
+</test>
+<test id="s1-s1-s2-t6" name="Monthly Interest Is Credited" line="40">
+<kw name="Open Funded Account" owner="banking">
+<kw name="Open Account" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>type=${type}</arg>
+<doc>Opens an empty account for ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.775683" elapsed="0.000270"/>
+</kw>
+<kw name="Deposit" owner="bank.BankLibrary">
+<arg>${owner}</arg>
+<arg>${amount}</arg>
+<doc>Adds ``amount`` to the account of ``owner``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.776025" elapsed="0.000115"/>
+</kw>
+<arg>erin</arg>
+<arg>1000</arg>
+<arg>type=savings</arg>
+<doc>Opens an account for ``owner`` and deposits ``amount``.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.775462" elapsed="0.000720"/>
+</kw>
+<kw name="Skip" owner="BuiltIn">
+<msg time="2026-09-14T19:35:34.776448" level="SKIP">Interest calculation is not implemented yet.</msg>
+<arg>Interest calculation is not implemented yet.</arg>
+<doc>Skips the rest of the current test.</doc>
+<status status="SKIP" start="2026-09-14T19:35:34.776243" elapsed="0.000263">Interest calculation is not implemented yet.</status>
+</kw>
+<tag>regression</tag>
+<tag>wip</tag>
+<status status="SKIP" start="2026-09-14T19:35:34.775160" elapsed="0.001449">Interest calculation is not implemented yet.</status>
+</test>
+<doc>Overdraft rules: checking accounts may go below zero up to their limit, savings accounts may not.</doc>
+<status status="PASS" start="2026-09-14T19:35:34.089364" elapsed="0.687455"/>
+</suite>
+<status status="FAIL" start="2026-09-14T19:35:34.081439" elapsed="0.695869"/>
+</suite>
+<status status="FAIL" start="2026-09-14T19:35:34.070680" elapsed="0.706950"/>
+</suite>
+<statistics>
+<total>
+<stat pass="7" fail="1" skip="1">All Tests</stat>
+</total>
+<tag>
+<stat pass="5" fail="0" skip="1">regression</stat>
+<stat pass="1" fail="0" skip="0">slow</stat>
+<stat pass="3" fail="1" skip="0">smoke</stat>
+<stat pass="0" fail="0" skip="1">wip</stat>
+</tag>
+<suite>
+<stat name="Tests" id="s1" pass="7" fail="1" skip="1">Tests</stat>
+<stat name="Accounts" id="s1-s1" pass="7" fail="1" skip="1">Tests.Accounts</stat>
+<stat name="Basics" id="s1-s1-s1" pass="2" fail="1" skip="0">Tests.Accounts.Basics</stat>
+<stat name="Overdraft" id="s1-s1-s2" pass="5" fail="0" skip="1">Tests.Accounts.Overdraft</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
