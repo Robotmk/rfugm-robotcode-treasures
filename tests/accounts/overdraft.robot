@@ -19,7 +19,7 @@ Withdraw Exactly Up To The Limit
 
 Checking Account Cannot Exceed The Limit
     Open Funded Account    alice    50
-    Run Keyword And Expect Error    Cannot withdraw 151 from alice*
+    Run Keyword And Expect Error    Withdrawal refused for alice*
     ...    Withdraw Within Limit    alice    151
     Balance Should Be    alice    50
 
