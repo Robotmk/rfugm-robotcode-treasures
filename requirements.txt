@@ -1,0 +1,116 @@
+annotated-doc==0.0.5
+    # via typer
+click==8.5.0
+    # via robotcode-plugin
+colorama==0.4.6
+    # via
+    #   robotcode-plugin
+    #   typer
+docutils==0.23
+    # via robotcode
+jinja2==3.1.6
+    # via robotframework-robocop
+markdown-it-py==4.2.0
+    # via rich
+markupsafe==3.0.3
+    # via jinja2
+mdurl==0.1.2
+    # via markdown-it-py
+msgpack==1.2.2
+    # via robotframework-robocop
+pathspec==1.1.1
+    # via robotframework-robocop
+platformdirs==4.11.8
+    # via
+    #   robotcode-robot
+    #   robotframework-robocop
+pluggy==1.6.0
+    # via robotcode-plugin
+prompt-toolkit==3.0.53
+    # via robotcode-repl
+pygments==2.21.0
+    # via rich
+pytz==2026.3.post1
+    # via robotframework-robocop
+pyyaml==6.0.3
+    # via robotcode
+rich==15.0.0
+    # via
+    #   robotcode-plugin
+    #   robotframework-robocop
+    #   typer
+robotcode==2.7.0
+    # via
+    #   robotcode-analyze
+    #   robotcode-language-server
+    #   robotcode-runner
+    #   robotcode-treasures
+robotcode-analyze==2.7.0
+    # via
+    #   robotcode
+    #   robotcode-language-server
+robotcode-core==2.7.0
+    # via
+    #   robotcode
+    #   robotcode-jsonrpc2
+    #   robotcode-robot
+robotcode-debugger==2.7.0
+    # via robotcode
+robotcode-jsonrpc2==2.7.0
+    # via
+    #   robotcode-debugger
+    #   robotcode-language-server
+    #   robotcode-repl-server
+robotcode-language-server==2.7.0
+    # via robotcode
+robotcode-modifiers==2.7.0
+    # via robotcode-runner
+robotcode-plugin==2.7.0
+    # via
+    #   robotcode
+    #   robotcode-analyze
+    #   robotcode-runner
+robotcode-repl==2.7.0
+    # via robotcode
+robotcode-repl-server==2.7.0
+    # via robotcode
+robotcode-robot==2.7.0
+    # via
+    #   robotcode
+    #   robotcode-analyze
+    #   robotcode-language-server
+    #   robotcode-runner
+robotcode-runner==2.7.0
+    # via
+    #   robotcode
+    #   robotcode-debugger
+    #   robotcode-repl
+    #   robotcode-repl-server
+robotframework==7.4.2
+    # via
+    #   robotcode-analyze
+    #   robotcode-debugger
+    #   robotcode-language-server
+    #   robotcode-modifiers
+    #   robotcode-robot
+    #   robotcode-runner
+    #   robotcode-treasures
+    #   robotframework-robocop
+robotframework-robocop==9.0.0
+    # via
+    #   robotcode
+    #   robotcode-treasures
+shellingham==1.5.4
+    # via typer
+tomli-w==1.2.0
+    # via
+    #   robotcode-plugin
+    #   robotframework-robocop
+typer==0.27.2
+    # via robotframework-robocop
+typing-extensions==4.16.0
+    # via
+    #   robotcode-core
+    #   robotframework-robocop
+wcwidth==0.8.3
+    # via prompt-toolkit

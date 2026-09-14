@@ -1,0 +1,14 @@
+[project]
+name = "robotcode-treasures"
+version = "1.0.0"
+description = "Hands-on workshop: the hidden treasures of RobotCode"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "robotframework~=7.4.2",
+    "robotcode[all]==2.7.0",
+    "robotframework-robocop>=8,<10",
+]
+
+[tool.uv]
+package = false
