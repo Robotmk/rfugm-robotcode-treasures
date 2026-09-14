@@ -62,5 +62,27 @@ check "switch back to main" test "$(branch)" = main
 
 check "unknown chapter fails" bash -c '! ./topic 42'
 
+check "runs when started with sh" bash -c 'sh ./topic 2 && test "$(git symbolic-ref --short HEAD)" = topic/02-beta'
+
+# Interactive menu, driven through a pseudo-terminal.
+tty_run() { # keys
+  if script --version >/dev/null 2>&1; then          # util-linux (Linux, Codespaces)
+    printf "$1" | TERM=xterm script -qec "./topic" /dev/null >/dev/null 2>&1
+  else                                               # BSD (macOS)
+    printf "$1" | TERM=xterm script -q /dev/null ./topic >/dev/null 2>&1
+  fi
+}
+./topic main >/dev/null
+tty_run '\033[B\r'
+check "menu: arrow down + Enter opens chapter 1" test "$(branch)" = topic/01-alpha
+tty_run 's'
+check "menu: s opens the solution of the selected chapter" test "$(branch)" = solution/01-alpha
+tty_run '2\r'
+check "menu: digit + Enter jumps to a chapter" test "$(branch)" = topic/02-beta
+tty_run '\033[A\033[A\rq'
+check "menu: arrow up + Enter opens main" test "$(branch)" = main
+tty_run 'q'
+check "menu: q changes nothing" test "$(branch)" = main
+
 echo
 if [ "$failures" -eq 0 ]; then echo "All tests passed."; else echo "$failures test(s) failed."; exit 1; fi
