@@ -6,7 +6,7 @@ default-profiles = ["local"]
 
 [profiles.local]
 description = "Run against the in-memory bank; skip tests that need the web service"
-excludes = ["integration"]
+extend-excludes = ["integration"]
 
 [profiles.service]
 description = "Run against the bank web service on localhost:8765"
@@ -22,7 +22,7 @@ includes = ["regression"]
 
 [profiles.ci]
 description = "Settings for CI pipelines: separate output folder, xUnit report, compact console"
-excludes = ["wip"]
+extend-excludes = ["wip"]
 output-dir = "results/ci"
 xunit = "xunit.xml"
 console = "dotted"
