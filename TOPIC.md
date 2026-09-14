@@ -2,13 +2,13 @@
 
 > ⏱ 10 minutes · 📚 [Get started](https://robotcode.io/02_get_started/)
 
-## 😖 Pain
+## Pain
 
 "Works on my machine." The test runs fine from the ▶ button, but fails in the terminal with
 `No keyword with name 'Open Account' found` — or the other way round. The editor and the terminal use different
 Pythons with different libraries installed, and nobody notices until something breaks.
 
-## 💎 Treasure
+## Treasure
 
 A **project-local environment** (`.venv`) that is created in seconds and used by *everything*: RobotCode in the
 editor, the `robotcode` command in the terminal, and later your CI pipeline.
@@ -19,7 +19,7 @@ editor, the `robotcode` command in the terminal, and later your CI pipeline.
 
 This Codespace ships [uv](https://docs.astral.sh/uv/) but deliberately **no environment** yet.
 
-## 🖥️ Demo
+## Demo
 
 1. Open `tests/accounts/basics.robot`. RobotCode cannot find Robot Framework — there is no environment yet.
 2. Create the environment from `pyproject.toml` and the lock file:
@@ -42,14 +42,14 @@ This Codespace ships [uv](https://docs.astral.sh/uv/) but deliberately **no envi
    uv run robotcode robot tests/accounts/basics.robot
    ```
 
-## 🛠️ Exercise
+## Exercise
 
 1. Create the environment with `uv sync` (or with pip, see above).
 2. Select it as the Python environment for RobotCode.
 3. Run `tests/accounts/basics.robot` from the **Test Explorer** (flask icon in the activity bar).
 4. Run the same file in the terminal with `robotcode`.
 
-### ⭐ Bonus
+### Bonus
 
 Create a second environment in `playground/` with an **older Robot Framework**, and see how RobotCode reports the
 difference:
@@ -63,7 +63,7 @@ playground/.venv/bin/robotcode discover info
 Which Robot Framework version does each environment report? What would happen if the editor used one and
 your terminal the other?
 
-## 💡 Hints
+## Hints
 
 <details><summary>Hint 1 — RobotCode still complains after <code>uv sync</code></summary>
 
@@ -84,7 +84,7 @@ Tests are discovered once the environment is selected. Use the refresh button at
 or run **RobotCode: Clear Cache and Restart Language Servers**.
 </details>
 
-## ✅ Self-check
+## Self-check
 
 ```bash
 uv run robotcode discover info
@@ -103,6 +103,6 @@ Expected (Python patch version and platform lines may differ):
 
 and in the Test Explorer, all three tests of `basics.robot` are green.
 
-## 🔑 Takeaway
+## Takeaway
 
 **One project-local environment — the editor, the terminal and CI all run the same Python.**
