@@ -123,6 +123,15 @@ tests/api/                 integration tests against the web service
 robot.toml                 profiles: local, service, smoke, regression, ci
 ```
 
+## Let's get started
+
+Now it is time to switch to the first topic: 
+
+```
+./topic 01
+```
+
+
 ## Links
 
 - Documentation: <https://robotcode.io>
