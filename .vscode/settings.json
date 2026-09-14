@@ -1,1 +1,6 @@
-{}
+{
+  "files.exclude": {
+    "**/__pycache__": true,
+    "**/.robotcode_cache": true
+  }
+}
