@@ -2,12 +2,12 @@
 
 > ⏱ 12 minutes · 📚 [Analyzing results](https://robotcode.io/03_reference/analyzing-results)
 
-## 😖 Pain
+## Pain
 
 The nightly run is red. The report is an 80 MB `log.html` that takes a minute to open in the browser, over a VPN,
 on a phone. And the only question you really have is: **what broke since yesterday — and why?**
 
-## 💎 Treasure
+## Treasure
 
 **`robotcode results`** (new in RobotCode 2.6) queries a finished run's `output.xml` / `output.json` from the
 terminal:
@@ -26,7 +26,7 @@ Without `-o`, the latest output of the active profile is used.
 
 This branch contains two recorded runs: `runs/before/output.xml` (yesterday) and `runs/after/output.xml` (today).
 
-## 🖥️ Demo
+## Demo
 
 ```bash
 robotcode results summary -o runs/after/output.xml --failed
@@ -35,7 +35,7 @@ robotcode results stats -o runs/after/output.xml --by tag
 robotcode results diff runs/before/output.xml runs/after/output.xml
 ```
 
-## 🛠️ Exercise
+## Exercise
 
 Using only `robotcode results`:
 
@@ -44,13 +44,13 @@ Using only `robotcode results`:
 3. From the failure message, which part of the bank is the likely culprit?
 4. Which tag has the largest total elapsed time in today's run?
 
-### ⭐ Bonus
+### Bonus
 
 A CI job should fail **only if there are new failures compared to the baseline** — not because of failures that
 were already there. Write a one-liner with `robotcode --format json results diff … | jq -e …` whose exit code is
 `0` for "no new failures" and non-zero otherwise. Test it with `runs/before` against itself, and against `runs/after`.
 
-## 💡 Hints
+## Hints
 
 <details><summary>Hint 1 — which command for which question</summary>
 
@@ -68,7 +68,7 @@ Library keywords show their library (`bank.BankLibrary.…`), resource keywords 
 `robotcode --format json results diff runs/before/output.xml runs/after/output.xml | jq .` — look at `newFailures`.
 </details>
 
-## ✅ Self-check
+## Self-check
 
 <details><summary>Expected answers</summary>
 
@@ -80,6 +80,6 @@ Library keywords show their library (`bank.BankLibrary.…`), resource keywords 
 Bonus: the one-liner exits with `0` for `before` vs. `before` and with `1` for `before` vs. `after`.
 </details>
 
-## 🔑 Takeaway
+## Takeaway
 
 **Query results like data — `diff` answers "what broke since yesterday?" in one command.**
