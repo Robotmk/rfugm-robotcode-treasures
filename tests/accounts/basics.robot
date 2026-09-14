@@ -23,4 +23,4 @@ Transfer Moves Money Between Accounts
     Transfer    alice    bob    30
     Balance Should Be    alice    70
     Balance Should Be    bob    30
-    Should Be Equal As Integers    ${LAST_TRANSFER_AMOUNT}    30
+    Should Be Equal As Integers    ${LAST_TRANSFER_AMOUNT}    30    # robotcode: ignore[VariableNotFound]
